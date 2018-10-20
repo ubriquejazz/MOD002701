@@ -1,0 +1,5 @@
+<b>User:</b> 11; <b>Subject:</b> accept inquire<br>Ok I will do that!<br>
+<b>User:</b> 11; <b>Subject:</b> modify my details<br>I want to update my picture<br>
+<b>User:</b> 9; <b>Subject:</b> new inquire<br>I want to open a business in Tokyo<br>
+<b>User:</b> 11; <b>Subject:</b> new inquire<br>I want to have my hair cut<br>
+<b>User:</b> 14; <b>Subject:</b> accept inquire<br>I want to contribuite on 20190201CB<br>

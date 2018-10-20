@@ -1,0 +1,3 @@
+<b>User1:</b> 11; <b>User2:</b> 14; <b>Subject:</b> feedback to a contributor; <b>Request:</b> NONE<br>I like how this user worked<br>
+<b>User1:</b> 9; <b>User2:</b> 14; <b>Subject:</b> feedback to a contributor; <b>Request:</b> 20130511PE<br>He helped me a lot<br>
+<b>User1:</b> 9; <b>User2:</b> 11; <b>Subject:</b> feedback to an inquirer; <b>Request:</b> 20140105CB<br>This is a lovely person<br>
