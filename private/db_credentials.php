@@ -3,6 +3,6 @@
 define("DB_SERVER", "localhost");
 define("DB_USER", "root");
 define("DB_PASS", "secret");
-define("DB_NAME", "biblio");
+define("DB_NAME", "globe_bank");
 
 ?>

@@ -8,8 +8,8 @@
   <ul class="subjects">
     <?php while($nav_subject = mysqli_fetch_assoc($nav_subjects)) { ?>
         <li class="<?php if($nav_subject['id'] == $subject_id) { echo 'selected'; } ?>">
-        <a href="<?php echo url_for('index.php?id=' . h(u($nav_subjects['id'])) ); ?>">
-          <?php echo h($nav_subjects['menu_name']); ?>
+        <a href="<?php echo url_for('index.php?id=' . h(u($nav_subject['id'])) ); ?>">
+          <?php echo h($nav_subject['menu_name']); ?>
         </a>
 
       </li>

@@ -12,7 +12,7 @@
     <header>
       <h1>
         <a href="<?php echo url_for('/index.php'); ?>">
-          <img src="<?php echo url_for('/images/gbi_logo.png'); ?>" width="298" height="71" alt="" />
+          <img src="<?php echo url_for('/images/gbi_logo.jpg'); ?>" width="150" height="100" alt="" />
         </a>
       </h1>
     </header>
