@@ -29,7 +29,7 @@
   	  </tr>
 
       <?php while($page = mysqli_fetch_assoc($page_set)) { ?>
-        <?php $subject = find_subject_by_id($page['subject_id']); ?>
+        <?php $subject = find_subject_by_id($page['subject_id'], ['visible' => false]); ?>
         <tr>
           <td><?php echo h($page['id']); ?></td>
           <td><?php echo h($subject['menu_name']); ?></td>
