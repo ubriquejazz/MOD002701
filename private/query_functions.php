@@ -1,5 +1,7 @@
 <?php
 
+  //use Biblys\Isbn\Isbn as Isbn;
+
   // Subjects
 
   function find_all_subjects($options=[]) {
@@ -179,6 +181,15 @@
       $errors[] = "Name must be between 2 and 255 characters.";
     }
 
+
+    // Check if the barcode is a valid ISBN code
+    $barcode_str = (string) $page['barcode'];
+    $barcode_str = "978-83-91146098";
+    $barcode_num = 9788391146098;
+    if(!has_length($barcode_str, ['min' => 1, 'max' => 18])) {
+      $errors[] = "ISBN must be between 10 and 13 characters.";
+    }
+
     // visible
     // Make sure we are working with a string
     $visible_str = (string) $page['visible'];
@@ -295,6 +306,7 @@
 
   // Admins
 
+  // Find all admins, ordered last_name, first_name
   function find_all_admins() {
     global $db;
 
@@ -318,7 +330,22 @@
     return $admin; // returns an assoc. array
   }
 
-  function validate_admin($admin) {
+  function find_admin_by_username($username) {
+    global $db;
+
+    $sql = "SELECT * FROM admins ";
+    $sql .= "WHERE username='" . db_escape($db, $username) . "' ";
+    $sql .= "LIMIT 1";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $admin = mysqli_fetch_assoc($result); // find first
+    mysqli_free_result($result);
+    return $admin; // returns an assoc. array
+  }
+
+  function validate_admin($admin, $options=[]) {
+
+    $password_required = $options['password_required'] ?? true;
 
     if(is_blank($admin['first_name'])) {
       $errors[] = "First name cannot be blank.";
@@ -342,28 +369,30 @@
 
     if(is_blank($admin['username'])) {
       $errors[] = "Username cannot be blank.";
-    } elseif (!has_length($admin['username'], array('min' => 4, 'max' => 255))) {
-      $errors[] = "Username must be between 4 and 255 characters.";
+    } elseif (!has_length($admin['username'], array('min' => 5, 'max' => 255))) {
+      $errors[] = "Username must be between 6 and 255 characters.";
     } elseif (!has_unique_username($admin['username'], $admin['id'] ?? 0)) {
       $errors[] = "Username not allowed. Try another.";
     }
 
-    if(is_blank($admin['password'])) {
-      $errors[] = "Password cannot be blank.";
-    } elseif (!has_length($admin['password'], array('min' => 8))) {
-      $errors[] = "Password must contain 8 or more characters";
-    } elseif (!preg_match('/[A-Z]/', $admin['password'])) {
-      $errors[] = "Password must contain at least 1 uppercase letter";
-    } elseif (!preg_match('/[a-z]/', $admin['password'])) {
-      $errors[] = "Password must contain at least 1 lowercase letter";
-    } elseif (!preg_match('/[0-9]/', $admin['password'])) {
-      $errors[] = "Password must contain at least 1 number";
-    }
+    if($password_required) {
+      if(is_blank($admin['password'])) {
+        $errors[] = "Password cannot be blank.";
+      } elseif (!has_length($admin['password'], array('min' => 8))) {
+        $errors[] = "Password must contain 8 or more characters";
+      } elseif (!preg_match('/[A-Z]/', $admin['password'])) {
+        $errors[] = "Password must contain at least 1 uppercase letter";
+      } elseif (!preg_match('/[a-z]/', $admin['password'])) {
+        $errors[] = "Password must contain at least 1 lowercase letter";
+      } elseif (!preg_match('/[0-9]/', $admin['password'])) {
+        $errors[] = "Password must contain at least 1 number";
+      }
 
-    if(is_blank($admin['confirm_password'])) {
-      $errors[] = "Confirm password cannot be blank.";
-    } elseif ($admin['password'] !== $admin['confirm_password']) {
-      $errors[] = "Password and confirm password must match.";
+      if(is_blank($admin['confirm_password'])) {
+        $errors[] = "Confirm password cannot be blank.";
+      } elseif ($admin['password'] !== $admin['confirm_password']) {
+        $errors[] = "Password and confirm password must match.";
+      }
     }
 
     return $errors;
@@ -377,7 +406,7 @@
       return $errors;
     }
 
-    $hashed_password = $admin['password']; // TODO be encrypted
+    $hashed_password = password_hash($admin['password'], PASSWORD_BCRYPT);
 
     $sql = "INSERT INTO admins ";
     $sql .= "(first_name, last_name, email, username, hashed_password) ";
@@ -404,18 +433,22 @@
   function update_admin($admin) {
     global $db;
 
-    $errors = validate_admin($admin);
+    $password_sent = !is_blank($admin['password']);
+
+    $errors = validate_admin($admin, ['password_required' => $password_sent]);
     if (!empty($errors)) {
       return $errors;
     }
 
-    $hashed_password = $admin['password'];
+    $hashed_password = password_hash($admin['password'], PASSWORD_BCRYPT);
 
     $sql = "UPDATE admins SET ";
     $sql .= "first_name='" . db_escape($db, $admin['first_name']) . "', ";
     $sql .= "last_name='" . db_escape($db, $admin['last_name']) . "', ";
     $sql .= "email='" . db_escape($db, $admin['email']) . "', ";
-    $sql .= "hashed_password='" . db_escape($db, $hashed_password) . "',";
+    if($password_sent) {
+      $sql .= "hashed_password='" . db_escape($db, $hashed_password) . "', ";
+    }
     $sql .= "username='" . db_escape($db, $admin['username']) . "' ";
     $sql .= "WHERE id='" . db_escape($db, $admin['id']) . "' ";
     $sql .= "LIMIT 1";

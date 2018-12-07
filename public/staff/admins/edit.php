@@ -2,6 +2,8 @@
 
 require_once('../../../private/initialize.php');
 
+require_login();
+
 if(!isset($_GET['id'])) {
   redirect_to(url_for('/staff/admins/index.php'));
 }
@@ -73,7 +75,7 @@ if(is_post_request()) {
         <dd><input type="password" name="confirm_password" value="" /></dd>
       </dl>
       <p>
-        Passwords should be at least 12 characters and include at least one uppercase letter, lowercase letter, number, and symbol.
+        Passwords should be at least 8 characters and include at least one uppercase letter, lowercase letter and number.
       </p>
       <br />
 
