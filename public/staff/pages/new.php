@@ -26,7 +26,7 @@ if(is_post_request()) {
 
   $page = [];
   $page['id'] = '';
-  $page['subject_id'] = '';
+  $page['subject_id'] = $_GET['subject_id'] ?? '1';
   $page['menu_name'] = '';
   $page['visible'] = '';
   $page['content'] = '';
@@ -39,7 +39,7 @@ if(is_post_request()) {
 
 <div id="content">
 
-  <a class="back-link" href="<?php echo url_for('/staff/pages/index.php'); ?>">&laquo; Back to List</a>
+  <a class="back-link" href="<?php echo url_for('/staff/subjects/show.php?id=' . h(u($page['subject_id']))); ?>">&laquo; Back to Subject Page</a>
 
   <div class="page new">
     <h1>Create Page</h1>
