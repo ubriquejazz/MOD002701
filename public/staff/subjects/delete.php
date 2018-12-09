@@ -17,6 +17,7 @@ if(is_post_request()) {
 
 } else {
   $subject = find_subject_by_id($id);
+  $page_count = count_pages_by_subject_id($subject['id']);
 }
 
 ?>
@@ -31,7 +32,9 @@ if(is_post_request()) {
   <div class="subject delete">
     <h1>Delete Subject</h1>
     <p>Are you sure you want to delete this subject?</p>
-    <p class="item"><?php echo h($subject['menu_name']); ?></p>
+    <p class="item">
+      <?php echo h($subject['menu_name']) . " (" . $page_count . " pages)"; ?>
+    </p>
 
     <form action="<?php echo url_for('/staff/subjects/delete.php?id=' . h(u($subject['id']))); ?>" method="post">
       <div id="operations">

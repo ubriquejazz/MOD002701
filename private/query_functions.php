@@ -1,7 +1,5 @@
 <?php
 
-  //use Biblys\Isbn\Isbn as Isbn;
-
   // Subjects
 
   function find_all_subjects($options=[]) {

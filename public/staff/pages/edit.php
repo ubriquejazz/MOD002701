@@ -77,25 +77,108 @@ if(is_post_request()) {
         </dd>
       </dl>
       <dl>
-        <dt>Visible</dt>
-        <dd>
-          <input type="hidden" name="visible" value="0" />
-          <input type="checkbox" name="visible" value="1"<?php if($page['subject_id'] == "1") { echo " checked"; } ?> />
-        </dd>
+        <dt>ISBN</dt>
       </dl>
+      <hr/>
+      <table>
+        <tr>
+          <td>
+            <dl>
+              <dt>First Name</dt>
+              <dd> Juan </dd>
+            </dl>
+          </td>
+          <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </td>
+          <td>
+            <dl>  
+              <dt>Available</dt>
+              <dd> No </dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <dl>
+              <dt>Last Name</dt>
+              <dd> Gago </dd>
+            </dl>
+          </td>
+          <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </td>
+          <td>
+            <dl>  
+              <dt>Amount</dt>
+              <dd> 1 </dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <dl>
+              <dt>Editorial</dt>
+              <dd> Planeta </dd>
+            </dl>
+          </td>
+          <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </td>
+          <td>
+            <dl>  
+              <dt>Letter</dt>
+              <dd> A/Abc </dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <dl>
+              <dt>City</dt>
+              <dd> Wroclaw </dd>
+            </dl>
+          </td>
+          <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </td>
+          <td>
+            <dl>  
+              <dt>Note</dt>
+              <dd>-</dd>
+            </dl>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <dl>
+              <dt>Year</dt>
+              <dd> 1998 </dd>
+            </dl>
+          </td>
+          <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </td>
+          <td>
+            <dl>  
+              <dt>Visible</dt>
+              <dd>
+                <input type="hidden" name="visible" value="0" />
+                <input type="checkbox" name="visible" value="1"<?php if($page['subject_id'] == "1") { echo " checked"; } ?> />
+              </dd>
+            </dl>
+          </td>
+        </tr>
+      </table>
+      <hr/>
       <dl>
         <dt>Content</dt>
         <dd>
           <textarea name="content" cols="60" rows="10"><?php echo h($page['content']); ?></textarea>
         </dd>
       </dl>
+      <hr/>
       <div id="operations">
         <input type="submit" value="Edit Page" />
       </div>
     </form>
 
   </div>
-
 </div>
 
 <?php include(SHARED_PATH . '/staff_footer.php'); ?>
