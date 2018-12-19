@@ -43,7 +43,7 @@ $subject = find_subject_by_id($page['subject_id']);
         <tr>
           <td>
             <dl>
-              <dt>First Name</dt>
+              <dt>Imię</dt>
               <dd> Juan </dd>
             </dl>
           </td>
@@ -51,7 +51,7 @@ $subject = find_subject_by_id($page['subject_id']);
           </td>
           <td>
             <dl>  
-              <dt>Available</dt>
+              <dt>Dostępność</dt>
               <dd> No </dd>
             </dl>
           </td>
@@ -59,7 +59,7 @@ $subject = find_subject_by_id($page['subject_id']);
         <tr>
           <td>
             <dl>
-              <dt>Last Name</dt>
+              <dt>Nazwisko</dt>
               <dd> Gago </dd>
             </dl>
           </td>
@@ -67,7 +67,7 @@ $subject = find_subject_by_id($page['subject_id']);
           </td>
           <td>
             <dl>  
-              <dt>Amount</dt>
+              <dt>Ilość</dt>
               <dd> 1 </dd>
             </dl>
           </td>
@@ -75,7 +75,7 @@ $subject = find_subject_by_id($page['subject_id']);
         <tr>
           <td>
             <dl>
-              <dt>Editorial</dt>
+              <dt>Wydawnictwo</dt>
               <dd> Planeta </dd>
             </dl>
           </td>
@@ -83,7 +83,7 @@ $subject = find_subject_by_id($page['subject_id']);
           </td>
           <td>
             <dl>  
-              <dt>Letter</dt>
+              <dt>Litera</dt>
               <dd> A/Abc </dd>
             </dl>
           </td>
@@ -91,7 +91,7 @@ $subject = find_subject_by_id($page['subject_id']);
         <tr>
           <td>
             <dl>
-              <dt>City</dt>
+              <dt>Miasto</dt>
               <dd> Wroclaw </dd>
             </dl>
           </td>
@@ -99,7 +99,7 @@ $subject = find_subject_by_id($page['subject_id']);
           </td>
           <td>
             <dl>  
-              <dt>Note</dt>
+              <dt>Adnotacja</dt>
               <dd>-</dd>
             </dl>
           </td>
@@ -107,7 +107,7 @@ $subject = find_subject_by_id($page['subject_id']);
         <tr>
           <td>
             <dl>
-              <dt>Year</dt>
+              <dt>Roku</dt>
               <dd> 1998 </dd>
             </dl>
           </td>
@@ -123,7 +123,7 @@ $subject = find_subject_by_id($page['subject_id']);
       </table>
       <hr/>
       <dl>
-        <dt>Content</dt>
+        <dt>Opis</dt>
         <dd><?php echo h($page['content']); ?></dd>
       </dl>
       <?php //end of the attribute division ?>
