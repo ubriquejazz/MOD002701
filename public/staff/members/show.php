@@ -9,7 +9,7 @@ $member = find_member_by_id($id);
 
 ?>
 
-<?php $page_title = 'Show Admin'; ?>
+<?php $page_title = 'Show Member'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
 
 <div id="content">
@@ -44,6 +44,28 @@ $member = find_member_by_id($id);
       </dl>
     </div>
 
+    <div class="attributes">
+      <h3>Registers of this user:</h3>
+      <ul>
+      <?php 
+        $user_registers = find_registers_for_user($id);
+        while($response = mysqli_fetch_assoc($user_registers)) {
+          $register_id = $response["id"];
+          $register = find_register_by_id($register_id);
+          echo "<li>";
+          //echo "<a href=\"manage_content.php?register={$register_id}\">";
+          echo h($register["page_id"]);
+          echo "</a>";
+          echo "</li>";
+        }
+      ?>
+      </ul>
+      <br />
+        + <a href="edit_registers.php?id=<?php echo u($member['id']); ?>">Edit registers</a>
+    </div>
+
   </div>
 
 </div>
+
+<?php include(SHARED_PATH . '/staff_footer.php'); ?>

@@ -674,6 +674,30 @@
     }
   }
 
-  // Records
+  // Registers
+
+  function find_registers_for_user($user_id){
+    global $db;
+
+    $sql = "SELECT * FROM registers ";
+    $sql .= "WHERE user_id='" . db_escape($db, $user_id) . "' ";
+    $sql .= "ORDER BY id ASC";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    return $result;
+  }
+
+  function find_register_by_id($id){
+    global $db;
+
+    $sql = "SELECT * FROM registers ";
+    $sql .= "WHERE id='" . db_escape($db, $id) . "' ";
+    $sql .= "LIMIT 1";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $register = mysqli_fetch_assoc($result); // find first
+    mysqli_free_result($result);
+    return $register; // returns an assoc. array
+  }
 
 ?>
