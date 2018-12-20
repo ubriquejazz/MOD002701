@@ -6,6 +6,7 @@ require_login();
 
 $id = $_GET['id'] ?? '1'; // PHP > 7.0
 $member = find_member_by_id($id);
+$register_set = find_registers_for_user($id);
 
 ?>
 
@@ -44,28 +45,43 @@ $member = find_member_by_id($id);
       </dl>
     </div>
 
-    <div class="attributes">
-      <h3>Registers of this user:</h3>
-      <ul>
-      <?php 
-        $user_registers = find_registers_for_user($id);
-        while($response = mysqli_fetch_assoc($user_registers)) {
-          $register_id = $response["id"];
-          $register = find_register_by_id($register_id);
-          echo "<li>";
-          //echo "<a href=\"manage_content.php?register={$register_id}\">";
-          echo h($register["page_id"]);
-          echo "</a>";
-          echo "</li>";
-        }
-      ?>
-      </ul>
-      <br />
-        + <a href="edit_registers.php?id=<?php echo u($member['id']); ?>">Edit registers</a>
+    <hr/>
+
+    <div class="pages listing">
+    <h2>Registers</h2>
+
+    <div class="actions">
+      <a class="action" href="<?php echo url_for('/staff/registers/new.php?subject_id=' . h(u($subject['id']))); ?>">Create New register</a>
     </div>
+
+    <table class="list">
+      <tr>
+        <th>ID</th>
+        <th>Book</th>
+        <th>Check-in</th>
+        <th>Check-out</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+
+      <?php while($register = mysqli_fetch_assoc($register_set)) { ?>
+        <?php $page = find_page_by_id($register['page_id'], ['visible' => false]); ?>
+        <tr>
+          <td><?php echo h($register['id']); ?></td>
+          <td><?php echo h($page['id']); ?></td>
+          <td><?php echo h($register['check_in']); ?></td>
+          <td><?php echo h($register['check_out']); ?></td>
+          <td><a class="action" href="<?php echo url_for('/staff/registers/show.php?id=' . h(u($register['id']))); ?>">View</a></td>
+          <td><a class="action" href="<?php echo url_for('/staff/registers/edit.php?id=' . h(u($register['id']))); ?>">Edit</a></td>
+          <td><a class="action" href="<?php echo url_for('/staff/registers/delete.php?id=' . h(u($register['id']))); ?>">Delete</a></td>
+        </tr>
+      <?php } ?>
+    </table>
+
+    <?php mysqli_free_result($register_set); ?>
+
 
   </div>
 
 </div>
-
-<?php include(SHARED_PATH . '/staff_footer.php'); ?>
