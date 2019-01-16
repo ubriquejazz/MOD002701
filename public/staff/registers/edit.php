@@ -15,6 +15,7 @@ if(is_post_request()) {
 
   $register = [];
   $register['id'] = $id;
+  $register['user_id'] = $_POST['user_id'] ?? '';
   $register['page_id'] = $_POST['page_id'] ?? '';
   $register['check_in'] = $_POST['check_in'] ?? '';
   $register['check_out'] = $_POST['check_out'] ?? '';
