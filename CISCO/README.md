@@ -6,35 +6,35 @@
 
 10.1 - Seguridad Endpoint
 
-* ESA, WSA
+* [ESA, WSA]()
 
 10.2 - Control de Acceso
 
-- Autenticación con una contraseña local
-- Componentes AAA
-- 802.1x (port-based access control)
+- [Autenticación con una contraseña local]()
+- [Componentes AAA]()
+- [802.1x (port-based access control)]()
 
 10.3 - Como mitigar amenazas de la Capa 2
 
-* IPSG, DHCP Snooping
-* Dynamic ARP Inspection
+* [IPSG, DHCP Snooping]()
+* [Dynamic ARP Inspection]()
 
 10.4 - Ataque de Tablas de Direcciones MAC
 
-* MAC Address Table Flooding
-* Port Security (Mitigate)
+* [MAC Address Table Flooding]()
+* [Port Security (Mitigate)]()
 
 10.5 - Ataques a la LAN
 
 - Video - VLAN y Ataques DHCP
-- VLAN: hopping, double-tag
-- DHCP: starvation, spoofing
+- [VLAN: hopping, double-tag]()
+- [DHCP: starvation, spoofing]()
 - Video- Ataques ARP, Ataques STP, y Reconocimiento CDP
-- ARP Poisoning Attack (MiM)
-- Address Spoofing Attack (IPSG)
+- [ARP Poisoning Attack (MiM)]()
+- [Address Spoofing Attack (IPSG)]()
 
-- Ataques STP
-- CDP Reconnaissance
+- [Ataques STP]()
+- [CDP Reconnaissance]()
 
 ### 11 - Configuraciones de seguridad del Switch
 
