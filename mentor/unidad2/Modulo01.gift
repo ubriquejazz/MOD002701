@@ -1,0 +1,88 @@
+$CATEGORY: Modulo 01
+
+::Q101:: 
+Señala la frase incorrecta respecto al lenguaje PHP: {
+    ~Es un lenguaje que se basa en la ejecución de scripts.
+    ~PHP está pensado especialmente para desarrollo web.
+    ~Se puede mezclar código HTML y PHP.
+    =Se puede utilizar únicamente en el sistema operativo Windows
+}
+
+::Q102:: 
+Suponiendo que $x contenga el valor 15, indica el resultado correcto de la siguiente sentencia: 
+if ($x < 15) $x -= 2; elseif ($x != 16) $x *= 2; else $x = (10 - 5 * 5); {
+    ~13.
+    =30.
+    ~-15.
+    ~25.
+}
+
+::Q103::  
+Para conocer si el tipo de dato que contiene una variable es número entero largo hay que usar la función {
+    ~isset().
+    ~is_int().
+    =is_long().
+    ~gettype().
+}
+    
+::Q104::  
+Selecciona la frase incorrecta sobre la lectura de datos desde una página web.{
+    =Los datos introducidos en un formulario no pueden pasar a otra página diferente.
+    ~Los formularios nos proporcionan la posibilidad de preguntar al usuario cliente una serie de datos.
+    ~La variable $_REQUEST contiene los datos introducidos en el formulario cuando pulsamos el botón SUBMIT.
+    ~En PHP una página web puede llamarse a sí misma.
+}
+
+::Q105::  
+Para modificar el tipo definido de una variable debemos usar la siguiente función: {
+    ~unset().
+    =settype().
+    ~isset().
+    ~empty().
+}
+    
+::Q106::  
+Indica cuál es el valor correcto de la expresión siguiente: ((20+12)/4+1-5*6) {
+    ~-23,6.
+    ~-5.
+    ~8,4.
+    =-21
+}
+    
+::Q107::  
+Indica la frase correcta. {
+    ~La orden print sirve para mostrar información en la página web con un determinado formato.
+    ~Las funciones printf() y sprintf() permiten mostrar información sin un formato determinado.
+    ~La orden show muestra datos en la página web con un formato determinado.
+    =La orden echo muestra información en la página web tal como la escribamos literalmente o según esté contenida en una variable.
+}
+    
+::Q108::  
+Indica en qué frase se citan una característica imprescindible a la hora de escribir scripts en PHP.{
+    ~El código PHP empieza con los símbolos <asp y termina con asp>
+    ~Puede insertarse código PHP donde se quiera y siempre que haga falta.
+    =Todas las instrucciones finalizan con punto y coma (";").
+    ~Los comentarios de código deben encontrarse entre "(*" y "*)"
+}
+    
+::Q109::  
+Indica la frase correcta sobre instrucciones o sentencias en PHP:  {
+    ~Las líneas de los scripts deben acabar siempre en coma ','.
+    ~El nombre de variable $unidad/B está bien definida.
+    =El intérprete de PHP distingue entre letras mayúsculas y minúsculas en el código fuente del script.
+    ~En PHP siempre hay que declarar previamente el tipo de variable al definirla.
+}
+    
+::Q1010::  
+Suponiendo que $z contenga el valor 12, indica el resultado correcto (valor de $d) de la siguiente sentencia:
+switch ($z) 
+    case 9: $d = (60 - 5 * $z); 
+    case (6 * 2): $d = (5 - 3 / 3); 
+    case 7: $d = (($z - 4) * 2); 
+    default: $d = 42;{
+    ~0.
+    ~-1,5.
+    ~16.
+    =42
+}
+    
