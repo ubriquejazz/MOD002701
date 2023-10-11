@@ -25,12 +25,4 @@
         array("Gasas", 1, 14.99, "limpia y cubre heridas o quemaduras")
     );
 
-    // --------------------------------
-
-    $agua = new Medicamento("H2O2", 0, 1.99, "para desinfectar heridas");
-
-    $miBotiquin = new Botiquin();
-    $miBotoquin->add($agua);
-    $miBotiquin->mostrar();
-
 ?>
