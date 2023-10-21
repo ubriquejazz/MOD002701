@@ -1,0 +1,4 @@
+0~Cena de sábado~1418338801~-40.00
+1~Compras supermercado~1401746401~-100.20
+2~Nómina trabajo~1370210401~1000.99
+0~Regalo cumpleaños Alicia~1362697201~-199.66
