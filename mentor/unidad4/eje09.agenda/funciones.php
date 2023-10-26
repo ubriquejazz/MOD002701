@@ -33,12 +33,12 @@
                 echo "<TR><TD>".$contactos_array[$i][1]."</TD>
                         <TD>".$contactos_array[$i][2]."</TD>
                         <TD>".$contactos_array[$i][3]."</TD> 
-                        <TD>".boton_ficticio("Editar","index_agenda.php?operacion=editar&nume=".$contactos_array[$i][0])."</TD>
-                        <TD>".boton_ficticio("Borrar","index_agenda.php?operacion=borrar&nume=".$contactos_array[$i][0]).
+                        <TD>".boton_ficticio("Editar","index.php?operacion=editar&nume=".$contactos_array[$i][0])."</TD>
+                        <TD>".boton_ficticio("Borrar","index.php?operacion=borrar&nume=".$contactos_array[$i][0]).
                     "</TD></TR>";			
             else // En caso contrario, estamos editando el registro $id y mostramos el correspondiente formulario 
             // con los valores del registro. Usamos la etiqueta de tipo hidden para pasar el nº de id a la página destino.
-                echo "<TR><FORM name=\"form3\" method=\"post\" action=\"index_agenda.php?operacion=modificar\">
+                echo "<TR><FORM name=\"form3\" method=\"post\" action=\"index.php?operacion=modificar\">
                     <TD><input type=\"text\" name=\"nombre\" size=\"10\" 
                         value = \"".$contactos_array[$i][1]. "\" maxlength=\"30\"></TD>
                     <TD><input type=\"text\" name=\"apellidos\" size=\"25\" 
@@ -52,7 +52,7 @@
         }
 
         // Formulario de alta de registros
-        echo "<TR><FORM name=\"form2\" method=\"post\" action=\"index_agenda.php?operacion=alta\">
+        echo "<TR><FORM name=\"form2\" method=\"post\" action=\"index.php?operacion=alta\">
                 <TD><input type=\"text\" name=\"nombre\" size=\"10\" maxlength=\"30\"></TD>
                 <TD><input type=\"text\" name=\"apellidos\" size=\"25\" maxlength=\"100\"></TD>
                 <TD><input type=\"text\" name=\"telefono\" size=\"10\" maxlength=\"30\"></TD> 

@@ -8,11 +8,18 @@
 		
         function set_directory() {
             $this->directorio = getcwd();
-            $this->directorio .= "\unidad4\\eje09.agenda";
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                // 'This is a server using Windows!';
+                $this->directorio .= "\unidad4\\eje09.agenda";
+            } else {
+                // 'This is a server not using Windows!';
+                // $this->directorio .= "/unidad4/eje09.agenda";
+            }
         }
 
 		function __construct () {
             $this->set_directory();
+            //echo $this->directorio;
             if (!chdir($this->directorio)) 
                 die ("no se ha accedido al directorio");
 
@@ -145,5 +152,4 @@
         print_r($mi->leer_contactos());    
     }
 
-    
 ?>
