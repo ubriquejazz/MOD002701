@@ -6,20 +6,19 @@
         private $directorio;
 		public $numero_contactos = 0;
 		
-        function set_directory() {
-            $this->directorio = getcwd();
+        function modify_directory() {
             if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
                 // 'This is a server using Windows!';
                 $this->directorio .= "\unidad4\\eje09.agenda";
             } else {
                 // 'This is a server not using Windows!';
-                // $this->directorio .= "/unidad4/eje09.agenda";
+                $this->directorio .= "/unidad4/eje09.agenda";
             }
         }
 
 		function __construct () {
-            $this->set_directory();
-            //echo $this->directorio;
+            $this->directorio = getcwd();
+            //$this->modify_directory();
             if (!chdir($this->directorio)) 
                 die ("no se ha accedido al directorio");
 
@@ -104,8 +103,10 @@
         		if ($contacto_str!=""){
         			$contacto = explode("~", $contacto_str);
         			// Buscamos si hay alguna coincidencia en alguno de los campos de búsqueda. 
-                    if ((stristr($contacto[1], $lo_q_busco)) || (stristr($contacto[2], $lo_q_busco)))
-        				array_push($contactos, explode("~", $contacto_str));
+                    if ((stristr($contacto[1], $lo_q_busco)) || (stristr($contacto[2], $lo_q_busco))) {
+                        $this->numero_contactos++;
+                        array_push($contactos, explode("~", $contacto_str));
+                    }
 				}
             }
             fclose($id_fichero);

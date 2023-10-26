@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    
+<body bgcolor="#C0C0C0" link="teal" vlink="teal" alink="teal">
+<TABLE border="0" align="center" cellspacing="3" cellpadding="3" width="600">
+<TR>
+	<TH colspan="2" width="100%" bgcolor="teal">
+		&nbsp;<FONT size="6" color="white" face="arial, helvetica">Agenda de Contactos</FONT>&nbsp
+	</TH>	
+</TR></TABLE><P>
+
 <?php
-
-
 	require ("funciones.php");
 	require ("agenda.php");
 	$mi_agenda=new agenda();
