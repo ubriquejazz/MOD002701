@@ -18,7 +18,7 @@
 
         require "funciones.php";
         require "monedero.php";
-        $cash = new monedero();
+        $cash = new monedero(getcwd());
 
         if (isset($_REQUEST["ordena_por_campo"])) $ordena_por_campo = $_REQUEST["ordena_por_campo"];
         else $ordena_por_campo = '';
@@ -30,39 +30,32 @@
             case "buscar": 
                 listado_registros($cash->buscar($_POST["buscar_edit"]), -1);
                 break;
-
-            case "alta": 
-                if ($_POST["concepto"]=="") echo "<CENTER>No se ha introducido ningún concepto</CENTER><P>";
-                else {
-                    $cash->alta_registro ($_POST["concepto"], $_POST["fecha"], $_POST["importe"]);
-                    echo "<CENTER>Se ha dado de alta correctamente el registro: ".$_POST["concepto"]." ".$_POST["fecha"]."</CENTER><P>";
-                }
-                listado_registros($cash->leer_registros(), -1);
+            case "editar":
+                listado_registros($cash->leer_todos(), $_REQUEST["nume"]);
+                break;
+            case "borrar":
+                $cash->borrar($_REQUEST["nume"]);
+                listado_registros($cash->leer_todos(), -1);
                 break;
 
-            case "editar":
-                listado_registros($cash->leer_registros(), $_REQUEST["nume"]);
+            case "alta":
+                if (isFormValid()) {
+                    $cash->alta($_POST["concepto"], $_POST["fecha"], $_POST["importe"]);
+                    echo "Se ha dado de alta correctamente: ".$_POST["concepto"]."<P>";
+                }
+                listado_registros($cash->leer_todos(), -1);
                 break;
 
             case "modificar":
-                if ($_POST["concepto"]=="") echo "<CENTER>No se ha introducido ningún concepto</CENTER><P>";
-                else {
-                    $fecha = isValidDate($_POST["fecha"])? $_POST["fecha"] : "01/01/1970";
-                    $importe = is_numeric($_POST["importe"])? $_POST["importe"] : 0;
-                    echo $_POST["concepto"] . " " . $fecha . " " . $importe;
-                    $cash->modificar_registro ($_POST["el_nume"], $_POST["concepto"], $fecha, $importe);
-                    echo "<CENTER>Se ha dado modificado correctamente el registro: ".$_POST["concepto"]." ".$_POST["fecha"]."</CENTER><P>";
+                if (isFormValid()) {
+                    $cash->modificar($_POST["el_nume"], $_POST["concepto"], $_POST["fecha"], $_POST["importe"]);
+                    echo "Se ha dado modificado correctamente: ".$_POST["concepto"]."<P>";
                 }
-                listado_registros($cash->leer_registros(), -1);
+                listado_registros($cash->leer_todos(), -1);
                 break;
 
-            case "borrar":
-                $cash->borrar_registro($_REQUEST["nume"]);
-                listado_registros($cash->leer_registros(), -1);
-                break;
-                
             default:
-                listado_registros($cash->leer_registros(), -1);
+                listado_registros($cash->leer_todos(), -1);
 	    } 
 
     ?>

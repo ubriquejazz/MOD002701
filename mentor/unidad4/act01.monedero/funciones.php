@@ -37,12 +37,12 @@
             }	
             else {
                 echo "<TR><FORM name=\"form1\" method=\"post\" action=\"index.php?operacion=modificar\">
-                        <TD><input type=\"text\" name=\"concepto\" size=\"10\" 
-                            value = \"".$registros_array[$i][1]. "\" maxlength=\"30\"></TD>
-                        <TD><input type=\"text\" name=\"fecha\" size=\"25\" 
-                            value = \"".date("d/m/Y",$timestamp). "\" maxlength=\"100\"></TD>
+                        <TD><input type=\"text\" name=\"concepto\" size=\"30\" 
+                            value = \"".$registros_array[$i][1]. "\" maxlength=\"50\"></TD>
+                        <TD><input type=\"text\" name=\"fecha\" size=\"20\" 
+                            value = \"".date("d/m/Y",$timestamp). "\" maxlength=\"20\"></TD>
                         <TD><input type=\"text\" name=\"importe\" size=\"10\" 
-                            value = \"".$registros_array[$i][3]. "\" maxlength=\"30\"></TD>";
+                            value = \"".$registros_array[$i][3]. "\" maxlength=\"10\"></TD>";
 
                 // Usamos la etiqueta de tipo hidden para pasar el nº de id a la página destino.
                 echo " <TD colspan=\"2\">
@@ -54,38 +54,49 @@
 
         // Formulario de alta de registros
         echo "<TR><FORM name=\"form2\" method=\"post\" action=\"index.php?operacion=alta\">
-                <TD><input type=\"text\" name=\"concepto\" size=\"10\" maxlength=\"30\"></TD>
-                <TD><input type=\"text\" name=\"fecha\" size=\"25\" maxlength=\"100\"></TD>
-                <TD><input type=\"text\" name=\"importe\" size=\"10\" maxlength=\"30\"></TD> 
+                <TD><input type=\"text\" name=\"concepto\" size=\"30\" maxlength=\"50\"></TD>
+                <TD><input type=\"text\" name=\"fecha\" size=\"20\" maxlength=\"20\"></TD>
+                <TD><input type=\"text\" name=\"importe\" size=\"10\" maxlength=\"10\"></TD> 
                 <TD colspan=\"2\"><INPUT TYPE=\"SUBMIT\" NAME=\"pulsa\"  VALUE=\"Añadir registro\"></TD>
             </FORM></TR>
             </TABLE>";
     }
 
     function isValidDate($date) {
+        if (!strstr($date, "/")) return false;
+        if (strlen($date) === 10) return false;
         list($day, $month, $year) = explode('/', $date);
+        //echo $day . " " . $month . " " . $year;
         return checkdate($month, $day, $year);
+    }
+
+    function isFormValid() {
+        $retVal = true;
+        if ($_POST["concepto"]=="") {
+            echo "No se ha introducido ningún concepto<br>";
+            $retVal = false;
+        }
+        if (!is_numeric($_POST["importe"])) {
+            echo "No se ha introducido un importe correcto<br>";
+            $retVal = false; 
+        }
+        if (!isValidDate($_POST["fecha"])) {
+            echo "No se ha introducido una fecha valida";
+            $retVal = false; 
+        }
+        echo "<p>";
+        return $retVal;
     }
 
     function test_date() {
         $timestamp = 1418338801;
         //echo date("d/m/Y",$timestamp);
-
-        if (false) {
-            $d = strtotime("2023-11-01");
-            echo $d;
-            echo " -> Created date is " . date("Y-m-d h:i:sa", $d);
-        }
-
-        $date = "2023-04-14";
+        $date = "14/14/2023";
         if (isValidDate($date)) {
             echo "Valid date";
         } else {
             echo "Invalid date";
         }
-
     }
-
-    //test_date();
 
 ?>
