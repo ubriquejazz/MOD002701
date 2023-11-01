@@ -10,53 +10,57 @@
     <TABLE border="0" align="center" cellspacing="3" cellpadding="3" width="600" bgcolor="#669900">
     <TR>	
         <td width=30><img src=cerdito.gif></td>
-        <TD align=center><FONT size="6" color="white" face="arial, helvetica">Monedero</FONT></TD>
+        <td align=center><FONT size="6" color="white" face="arial, helvetica">Monedero</FONT></td>
         <td width=30><img src=cerdito.gif></td>
     </TR>
     </TABLE><P>
-                
-    <TABLE BORDER=0 cellspacing=2 cellpadding=2 align="center" width="600">
-    <TR>
-    <TH bgcolor=teal width=300><FONT face="arial, helvetica">
-    <A href= index.php?ordena_por_campo=concepto&id=-1&buscar_texto= alt="Ordenar por Concepto">
-        Concepto</A></FONT></TH>
-    <TH bgcolor=#669900 width=100><FONT face="arial, helvetica">
-    <A href= index.php?ordena_por_campo=fecha&id=-1&buscar_texto= alt="Ordenar por Fecha">
-        Fecha</A></FONT></TH>
-    <TH bgcolor=#669900 width=100><FONT face="arial, helvetica">
-    <A href= index.php?ordena_por_campo=importe&id=-1&buscar_texto= alt="Ordenar por Importe">
-        Importe (&euro;)</A></FONT></TH>
-    <TH bgcolor=#669900 width=100 colspan="2"><FONT color=white face="arial, helvetica">
-        Operaciones</FONT></TH>
-
+        
     <?php
-
-        echo "<TABLE BORDER=\"0\" cellspacing=\"2\" cellpadding=\"2\" align=\"center\" width=\"600\">
-            <TR>
-            <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\">Nombre
-                </FONT></th>
-            <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\">Apellidos
-                </FONT></th>
-            <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\">Teléfono
-                </FONT></th>
-            <th bgcolor=\"teal\" colspan=\"2\"><FONT color=\"white\" face=\"arial, helvetica\">Operaciones
-                </FONT></th>
-            </TR>";	            
-
-
 
         require "funciones.php";
         require "monedero.php";
+        $cash = new monedero();
 
-        echo "<TR><TD>1</TD>";
-        echo "<TD>2</TD>";
-        echo "<TD>2</TD>";
-        echo "<TD>3</TD></TR>";
+        if (isset($_REQUEST["ordena_por_campo"])) $ordena_por_campo = $_REQUEST["ordena_por_campo"];
+        else $ordena_por_campo = '';
+
+    	if (isset($_REQUEST["operacion"])) $operacion = $_REQUEST["operacion"];
+        else $operacion = '';
+
+        echo $operacion;
+        switch ($operacion) {
+            case "buscar": 
+                //listado_registros($cash->buscar($_POST["buscar_edit"]), -1);
+                break;
+                
+            default:
+                listado_registros($cash->leer_registros(), -1);
+	    } 
+
     ?>
-    </TR>
-    </TABLE><BR>
-    NOTA: es obligatorio rellenar el campo Concepto.<br>
-    <a href='http://olivo.mentor.mec.es/cursophp/iniciacion/php_ini_2014/unidad4/act1/'>Jump to Chapter 4</a>  
+
+    <CENTER><P>
+	<TABLE border=0 width=600>
+		<TR><TD colspan="2"><HR></TD></TR>
+		<TR><TD valign=top align=right>
+			<FORM name="form3" METHOD="POST" ACTION="index.php?operacion=buscar">
+				<FONT size ="-1" face="arial, helvetica"> Buscar concepto</FONT></TD>
+				<TD><INPUT TYPE="TEXT" NAME="buscar_edit" size="20"> 
+				<INPUT TYPE="SUBMIT" NAME="buscar"  VALUE="¡Buscar!">
+			</FORM></TD></TR>
+		<TR><TD colspan="2"><HR></TD></TR>
+	</TABLE>
+	</CENTER>    
+
+	<TABLE BORDER="0" cellspacing="1" cellpadding="1" align="center" width="600">
+		<TR>
+			<TD><FONT size ="-1" face="arial, helvetica">
+				El nº total de registros es: <?php echo $cash->numero_registros;?></LEFT></FONT><P></TD>
+			<TD valign=top align=right>		
+			<?php echo boton_ficticio("Ver listado inicial","index.php?operacion=listado"); ?></TD>
+		</TR>
+	</TABLE>
+    NOTA: es obligatorio rellenar el campo Concepto.<br> 
 </center> 
 </body>
 </html>

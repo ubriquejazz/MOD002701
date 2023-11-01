@@ -76,12 +76,14 @@
             
             $j=0; // para renombrar el id de cada registro
             for ($i=0; $i<sizeof($contactos); $i++) {
-    			// Si el id del contacto NO es el id que queremos borrar entonces
-    			// lo añadimos a la matriz de resultados e incrementamos el contador j.
-    			if ($contactos[$i][0] != $id_to_del) {
+                $id_current = $contactos[$i][0];
+    			// Si el id del contacto NO es el id que queremos borrar entonces 
+    			// lo añadimos al fichero temporal e incrementamos el contador j.
+    			if ($id_current != $id_to_del) {
     				$contactos[$i][0]=$j;
     				$contacto_str = implode("~", $contactos[$i]);
-    				// Si estamos escribiendo el registro >0 entonces hay que añadir NL
+    				
+                    // Si estamos escribiendo el registro >0 entonces hay que añadir NL
     		        if ($j>0) fputs($id_fichero_temp, "\n"); 					
     				fputs($id_fichero_temp, $contacto_str);
     				$j+=1;
@@ -123,8 +125,9 @@
 
             $contactos=$this->leer_contactos();                
             for ($i=0;$i<sizeof($contactos);$i++) {
+                $id_current = $contactos[$i][0];
                 // Si el id del contacto corresponde al que queremos editar, modifico
-                if ($contactos[$i][0] == $id_to_modi) {
+                if ($id_current == $id_to_modi) {
                     $contactos[$i][1]=$nombre;
                     $contactos[$i][2]=$apellidos;
                     $contactos[$i][3]=$telefono;
