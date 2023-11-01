@@ -14,7 +14,6 @@
         <td width=30><img src=cerdito.gif></td>
     </TR>
     </TABLE><P>
-        
     <?php
 
         require "funciones.php";
@@ -27,10 +26,39 @@
     	if (isset($_REQUEST["operacion"])) $operacion = $_REQUEST["operacion"];
         else $operacion = '';
 
-        echo $operacion;
         switch ($operacion) {
             case "buscar": 
-                //listado_registros($cash->buscar($_POST["buscar_edit"]), -1);
+                listado_registros($cash->buscar($_POST["buscar_edit"]), -1);
+                break;
+
+            case "alta": 
+                if ($_POST["concepto"]=="") echo "<CENTER>No se ha introducido ningún concepto</CENTER><P>";
+                else {
+                    $cash->alta_registro ($_POST["concepto"], $_POST["fecha"], $_POST["importe"]);
+                    echo "<CENTER>Se ha dado de alta correctamente el registro: ".$_POST["concepto"]." ".$_POST["fecha"]."</CENTER><P>";
+                }
+                listado_registros($cash->leer_registros(), -1);
+                break;
+
+            case "editar":
+                listado_registros($cash->leer_registros(), $_REQUEST["nume"]);
+                break;
+
+            case "modificar":
+                if ($_POST["concepto"]=="") echo "<CENTER>No se ha introducido ningún concepto</CENTER><P>";
+                else {
+                    $fecha = isValidDate($_POST["fecha"])? $_POST["fecha"] : "01/01/1970";
+                    $importe = is_numeric($_POST["importe"])? $_POST["importe"] : 0;
+                    echo $_POST["concepto"] . " " . $fecha . " " . $importe;
+                    $cash->modificar_registro ($_POST["el_nume"], $_POST["concepto"], $fecha, $importe);
+                    echo "<CENTER>Se ha dado modificado correctamente el registro: ".$_POST["concepto"]." ".$_POST["fecha"]."</CENTER><P>";
+                }
+                listado_registros($cash->leer_registros(), -1);
+                break;
+
+            case "borrar":
+                $cash->borrar_registro($_REQUEST["nume"]);
+                listado_registros($cash->leer_registros(), -1);
                 break;
                 
             default:
@@ -39,7 +67,6 @@
 
     ?>
 
-    <CENTER><P>
 	<TABLE border=0 width=600>
 		<TR><TD colspan="2"><HR></TD></TR>
 		<TR><TD valign=top align=right>
@@ -50,7 +77,6 @@
 			</FORM></TD></TR>
 		<TR><TD colspan="2"><HR></TD></TR>
 	</TABLE>
-	</CENTER>    
 
 	<TABLE BORDER="0" cellspacing="1" cellpadding="1" align="center" width="600">
 		<TR>
