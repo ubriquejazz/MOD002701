@@ -16,9 +16,12 @@
         // Cabecera
 		echo "<TABLE BORDER=\"0\" cellspacing=\"1\" cellpadding=\"1\" align=\"center\" width=\"600\">
             <TR>
-                <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\">Concepto </FONT></th>
-                <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\">Fecha </FONT></th>
-                <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\">Importe </FONT></th>
+                <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\"><A href= index.php?ordena_por_campo=concepto>
+                    Concepto</A></FONT></th>
+                <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\"><A href= index.php?ordena_por_campo=fecha>
+                    Fecha</A></FONT></th>
+                <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\"><A href= index.php?ordena_por_campo=importe>
+                    Importe(&euro;)</A></FONT></th>
                 <th bgcolor=\"teal\" colspan=\"2\"><FONT color=\"white\" face=\"arial, helvetica\">Operaciones</FONT></th>
             </TR>";
 
@@ -62,36 +65,44 @@
             </TABLE>";
     }
 
-    function isValidDate($date) {
-        if (!strstr($date, "/")) return false;
-        if (strlen($date) === 10) return false;
-        list($day, $month, $year) = explode('/', $date);
-        //echo $day . " " . $month . " " . $year;
-        return checkdate($month, $day, $year);
+    function extractColumn($matrix, $index) {
+        $columna = array();
+        foreach($matrix as $fila) {
+            array_push($columna, $fila[$index]); 
+        }
+        return $columna;
     }
 
-    function isFormValid() {
+    function isFormValid($concepto, $fecha, $importe) {
         $retVal = true;
-        if ($_POST["concepto"]=="") {
+        if ($concepto=="") {
             echo "No se ha introducido ningún concepto<br>";
             $retVal = false;
         }
-        if (!is_numeric($_POST["importe"])) {
-            echo "No se ha introducido un importe correcto<br>";
+        if (!isValidDate($fecha)) {
+            echo "No se ha introducido una fecha valida";
             $retVal = false; 
         }
-        if (!isValidDate($_POST["fecha"])) {
-            echo "No se ha introducido una fecha valida";
+        if (!is_numeric($importe)) {
+            echo "No se ha introducido un importe correcto<br>";
             $retVal = false; 
         }
         echo "<p>";
         return $retVal;
     }
 
+    function isValidDate($date) {
+        if (!strstr($date, "/")) return false;
+        $len = strlen($date);
+        if (($len < 8) || ($len > 10)) return false;
+        list($day, $month, $year) = explode('/', $date);
+        return checkdate($month, $day, $year);
+    }
+
     function test_date() {
         $timestamp = 1418338801;
         //echo date("d/m/Y",$timestamp);
-        $date = "14/14/2023";
+        $date = "11/11/2023";
         if (isValidDate($date)) {
             echo "Valid date";
         } else {

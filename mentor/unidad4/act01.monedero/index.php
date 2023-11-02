@@ -39,7 +39,7 @@
                 break;
 
             case "alta":
-                if (isFormValid()) {
+                if (isFormValid($_POST["concepto"], $_POST["fecha"], $_POST["importe"])) {
                     $cash->alta($_POST["concepto"], $_POST["fecha"], $_POST["importe"]);
                     echo "Se ha dado de alta correctamente: ".$_POST["concepto"]."<P>";
                 }
@@ -47,7 +47,7 @@
                 break;
 
             case "modificar":
-                if (isFormValid()) {
+                if (isFormValid($_POST["concepto"], $_POST["fecha"], $_POST["importe"])) {
                     $cash->modificar($_POST["el_nume"], $_POST["concepto"], $_POST["fecha"], $_POST["importe"]);
                     echo "Se ha dado modificado correctamente: ".$_POST["concepto"]."<P>";
                 }
@@ -55,9 +55,36 @@
                 break;
 
             default:
-                listado_registros($cash->leer_todos(), -1);
+                $matriz = $cash->leer_todos();
+                switch ($ordena_por_campo) {
+                    case "concepto":
+                        
+                        // $columna = extractColumn($matriz, 1);
+                        usort($matriz, function($a, $b) {
+                            return $a[1] <=> $b[1];
+                        });
+                        listado_registros($matriz, -1);
+                        break;
+                    case "fecha";
+                        $matriz = $cash->leer_todos();
+                        // $columna = extractColumn($matriz, 2);
+                        usort($matriz, function($a, $b) {
+                            return $a[2] <=> $b[2];
+                        });                        
+                        listado_registros($matriz, -1);
+                        break;
+                    case "importe":
+                        $matriz = $cash->leer_todos();
+                        // $columna = extractColumn($matriz, 3);
+                        usort($matriz, function($a, $b) {
+                            return $a[3] <=> $b[3];
+                        });
+                        listado_registros($matriz, -1);
+                        break;
+                    default:
+                        listado_registros($matriz, -1);
+                }                
 	    } 
-
     ?>
 
 	<TABLE border=0 width=600>
@@ -74,10 +101,13 @@
 	<TABLE BORDER="0" cellspacing="1" cellpadding="1" align="center" width="600">
 		<TR>
 			<TD><FONT size ="-1" face="arial, helvetica">
-				El nº total de registros es: <?php echo $cash->numero_registros;?></LEFT></FONT><P></TD>
+				El nº total de registros es: <?php echo $cash->numero_registros;?></LEFT></FONT><P></TD>              
 			<TD valign=top align=right>		
 			<?php echo boton_ficticio("Ver listado inicial","index.php?operacion=listado"); ?></TD>
-		</TR>
+    </TR><TR>
+        <TD><FONT size ="-1" face="arial, helvetica" color=red>
+            El balance del monedero es de <b><?php echo $cash->balance_total; ?> </b> &euro;</FONT><P></TD>  
+    </TR>
 	</TABLE>
     NOTA: es obligatorio rellenar el campo Concepto.<br> 
 </center> 

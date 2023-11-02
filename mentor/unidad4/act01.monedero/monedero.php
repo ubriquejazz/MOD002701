@@ -15,6 +15,7 @@
 
         private $nombre_fichero = "monedero.txt";
         public $numero_registros = 0;
+        public $balance_total = 0;
 
         function __construct($path) {
             if (!chdir($path)) 
@@ -35,9 +36,9 @@
             while (!feof($id_fichero)){
                 $registro_str = trim(fgets($id_fichero));
         		if ($registro_str!=""){
-        			// Usamos explode para separar los datos de la cadena en una matriz  
-        			// despues la añadimos con array_push a la matriz $matriz
-    				array_push($matriz, explode("~", $registro_str));
+                    $registro= explode("~", $registro_str);
+                    $this->balance_total += $registro[3];
+    				array_push($matriz, $registro);  
     				$this->numero_registros++;
 				}
             } 
@@ -76,7 +77,6 @@
             // Juntamos todos los datos de la matriz en una cadena separada por el carácter ~
 			$registro = array("nume"=>$nume, "concepto"=>$concepto, "fecha"=>strtotime($fecha), "importe"=>$importe);
     		$registro_str = "\n".implode("~", $registro);
-            echo $registro_str;
 
             // Añadimos la cadena anterior al fichero
 			fputs($id_fichero, $registro_str);
@@ -136,7 +136,6 @@
 			unlink($this->nombre_fichero);
 			rename("basura.tmp", $this->nombre_fichero);          
         }
-
     }
 
     function test01() {
