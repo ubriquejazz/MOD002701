@@ -14,78 +14,56 @@
         <td width=30><img src=cerdito.gif></td>
     </TR>
     </TABLE><P>
-    <?php
+<?php
+    require "funciones.php";
+    require "monedero.php";
+    
+    if (isset($_REQUEST["ordena_por_campo"])) $ordena_por_campo = $_REQUEST["ordena_por_campo"];
+    else $ordena_por_campo = '';
+    if (isset($_REQUEST["operacion"])) $operacion = $_REQUEST["operacion"];
+    else $operacion = '';
 
-        require "funciones.php";
-        require "monedero.php";
-        $cash = new monedero(getcwd());
+    $cash = new monedero(getcwd());
+    $matriz = $cash->leer_todos();
+    tabla_header();
 
-        if (isset($_REQUEST["ordena_por_campo"])) $ordena_por_campo = $_REQUEST["ordena_por_campo"];
-        else $ordena_por_campo = '';
+    switch ($operacion) {
+        case "buscar": 
+            tabla_registros($cash->buscar($_POST["buscar_edit"]), -1);
+            break;
+        case "editar":
+            tabla_registros($matriz, $_REQUEST["nume"]);
+            break;
+       case "borrar":
+            $cash->borrar($_REQUEST["nume"]);
+            $matriz = $cash->leer_todos();
+            tabla_registros($matriz, -1);
+            break;
 
-    	if (isset($_REQUEST["operacion"])) $operacion = $_REQUEST["operacion"];
-        else $operacion = '';
+        case "alta":
+            if (isFormValid($_POST["concepto"], $_POST["fecha"], $_POST["importe"])) {
+                $cash->alta($_POST["concepto"], $_POST["fecha"], $_POST["importe"]);
+                echo "Se ha dado de alta correctamente: ".$_POST["concepto"]."<P>";
+            }
+            $matriz = $cash->leer_todos();
+            tabla_registros($matriz, -1);
+            break;
 
-        switch ($operacion) {
-            case "buscar": 
-                listado_registros($cash->buscar($_POST["buscar_edit"]), -1);
-                break;
-            case "editar":
-                listado_registros($cash->leer_todos(), $_REQUEST["nume"]);
-                break;
-            case "borrar":
-                $cash->borrar($_REQUEST["nume"]);
-                listado_registros($cash->leer_todos(), -1);
-                break;
+        case "modificar":
+            if (isFormValid($_POST["concepto"], $_POST["fecha"], $_POST["importe"])) {
+                $cash->modificar($_POST["el_nume"], $_POST["concepto"], $_POST["fecha"], $_POST["importe"]);
+                echo "Se ha dado modificado correctamente: ".$_POST["concepto"]."<P>";
+            }
+            $matriz = $cash->leer_todos();
+            tabla_registros($matriz, -1);
+            break;
 
-            case "alta":
-                if (isFormValid($_POST["concepto"], $_POST["fecha"], $_POST["importe"])) {
-                    $cash->alta($_POST["concepto"], $_POST["fecha"], $_POST["importe"]);
-                    echo "Se ha dado de alta correctamente: ".$_POST["concepto"]."<P>";
-                }
-                listado_registros($cash->leer_todos(), -1);
-                break;
+        default:
+            //tabla_registros($matriz, -1);
+            ordenar($matriz, $ordena_por_campo);
+    }
 
-            case "modificar":
-                if (isFormValid($_POST["concepto"], $_POST["fecha"], $_POST["importe"])) {
-                    $cash->modificar($_POST["el_nume"], $_POST["concepto"], $_POST["fecha"], $_POST["importe"]);
-                    echo "Se ha dado modificado correctamente: ".$_POST["concepto"]."<P>";
-                }
-                listado_registros($cash->leer_todos(), -1);
-                break;
-
-            default:
-                $matriz = $cash->leer_todos();
-                switch ($ordena_por_campo) {
-                    case "concepto":
-                        
-                        // $columna = extractColumn($matriz, 1);
-                        usort($matriz, function($a, $b) {
-                            return $a[1] <=> $b[1];
-                        });
-                        listado_registros($matriz, -1);
-                        break;
-                    case "fecha";
-                        $matriz = $cash->leer_todos();
-                        // $columna = extractColumn($matriz, 2);
-                        usort($matriz, function($a, $b) {
-                            return $a[2] <=> $b[2];
-                        });                        
-                        listado_registros($matriz, -1);
-                        break;
-                    case "importe":
-                        $matriz = $cash->leer_todos();
-                        // $columna = extractColumn($matriz, 3);
-                        usort($matriz, function($a, $b) {
-                            return $a[3] <=> $b[3];
-                        });
-                        listado_registros($matriz, -1);
-                        break;
-                    default:
-                        listado_registros($matriz, -1);
-                }                
-	    } 
-    ?>
+?>
 
 	<TABLE border=0 width=600>
 		<TR><TD colspan="2"><HR></TD></TR>

@@ -1,5 +1,6 @@
 0~Cena de empleados~1418338801~-40.00
 1~Compras supermercado~1401746401~-100.20
-2~Nomina trabajo~1370210400~350.99
+2~Nomina trabajo~1362524400~1100
 3~Regalo Alicia~1362697201~-199.66
-4~Regalo Ildefonso~1375480800~-12.99
+4~Regalo Jose Pedro~1362697200~-12.99
+5~Premio Nobel~1667257200~2
