@@ -1,26 +1,23 @@
 <?php	
+
+    function getDirectory() {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            // 'This is a server using Windows!';
+            return getcwd()."\menor\unidad4\\eje09.agenda";
+        } else {
+            // 'This is a server not using Windows!';
+            return getcwd()."/mentor/unidad4/eje09.agenda";
+        }
+    }
 	
 	class agenda {
 		
 		private $nombre_fichero = "contactos.txt";
-        private $directorio;
 		public $numero_contactos = 0;
-		
-        function modify_directory() {
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                // 'This is a server using Windows!';
-                $this->directorio .= "\unidad4\\eje09.agenda";
-            } else {
-                // 'This is a server not using Windows!';
-                $this->directorio .= "/unidad4/eje09.agenda";
-            }
-        }
 
-		function __construct () {
-            $this->directorio = getcwd();
-            //$this->modify_directory();
-            if (!chdir($this->directorio)) 
-                die ("no se ha accedido al directorio");
+		function __construct($path) {
+            if (!@chdir($path)) 
+                die ("<B>El fichero '$path' no se ha accedido");
 
       		if (!file_exists($this->nombre_fichero)){
       			$id_fichero=@fopen($this->nombre_fichero,"w") 
@@ -147,7 +144,7 @@
     }
 
     function test() {
-        $mi=new agenda();
+        $mi=new agenda(getDirectory());
         print_r($mi->buscar("ortega"));
         //$mi->alta_contacto("Juan", "Gago", "1122334455");
         //print_r($mi->leer_contactos());
@@ -155,5 +152,7 @@
         $mi->modificar_contacto(2, "Fernando", "Mora", "921444444");
         print_r($mi->leer_contactos());    
     }
+
+    test();
 
 ?>
