@@ -14,61 +14,17 @@
             <td width=30><img height=70 width=70 src=medicina.gif></td>
         </TR>
     </TABLE><P>
+
     <?php
 
-        require "funciones.php";
-        require "farmacia.php";
-        $apoteke = new farmacia(getcwd());
+    require "farmacia.php";
+    $apoteke = new farmacia(getcwd());
 
-        if (isset($_REQUEST["ordena_por_campo"])) $ordena_por_campo = $_REQUEST["ordena_por_campo"];
-        else $ordena_por_campo = '';
 
-    	if (isset($_REQUEST["operacion"])) $operacion = $_REQUEST["operacion"];
-        else $operacion = '';
-        switch ($operacion) {
-            case "buscar": 
-                listado_registros($apoteke->buscar($_POST["buscar_edit"]), -1);
-                break;
-            case "editar":
-                listado_registros($apoteke->leer_todos(), $_REQUEST["nume"]);
-                break;
-            case "borrar":
-                $apoteke->borrar($_REQUEST["nume"]);
-                listado_registros($apoteke->leer_todos(), -1);
-                break;
 
-            case "alta": 
-                if (isset($_POST["nombre"])) $nombre = $_POST["nombre"];
-                else $nombre = '';
-                $coincide = $apoteke->buscar($nombre);
-                if ($nombre=="") 
-                    echo "No se ha introducido ningún nombre<P>";
-                else if (!empty ($coincide) and strtoupper($coincide[0][1]) === strtoupper($nombre))
-                    echo "El medicamento '$nombre' ya existe<P>";
-                    // TODO: mejorar el sistema de busqueda con stristr()
-                else {
-                    $apoteke->alta($nombre, $_POST["cantidad"], $_POST["importe"]);
-                    echo "Se ha dado de alta correctamente: ".$nombre."<P>";
-                }
-                listado_registros($apoteke->leer_todos(), -1);
-                break;    
-        
-            case "modificar":
-                if ($_POST["nombre"]=="") 
-                    echo "No se ha introducido ningún nombre<P>";
-                else {
-                    $apoteke->modificar ($_POST["el_nume"], $_POST["nombre"], $_POST["cantidad"], $_POST["importe"]);
-                    echo "Se ha dado modificado correctamente: ".$_POST["nombre"]."<P>";
-                }
-                listado_contactos($mi_agenda->leer_contactos(), -1);
-                break;
 
-            default:
-                listado_registros($apoteke->leer_todos(), -1);
-	    } 
-
+    
     ?>
-
 	<TABLE border=0 width=600>
 		<TR><TD colspan="2"><HR></TD></TR>
 		<TR><TD valign=top align=right>
@@ -83,7 +39,7 @@
     <TABLE BORDER="0" cellspacing="1" cellpadding="1" align="center" width="600">
 		<TR>
 			<TD><FONT size ="-1" face="arial, helvetica">
-				El nº de medicamentos es: <?php echo $apoteke->numero_registros;?></LEFT></FONT><P></TD>
+				El nº de medicamentos es: <?php echo $apoteke->numero_medicamentos;?></LEFT></FONT><P></TD>
 			<TD valign=top align=right>		
 			<?php echo boton_ficticio("Ver listado inicial","index.php?operacion=listado"); ?></TD>
 		</TR>
@@ -91,5 +47,5 @@
 
     NOTA: no se puede repetir el nombre de un medicamento en esta farmacia.
     </center>
-</BODY>             
+</body>
 </html>

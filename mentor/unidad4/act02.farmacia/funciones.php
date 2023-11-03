@@ -1,7 +1,6 @@
 <?php
-
     // Método que crea los botones de cada opción de los registros utilizando una tabla HTML 
-    function boton_ficticio($caption,$url) {
+    function boton_ficticio($caption, $url) {
         return "<TABLE border=1 CELLSPACING=0 CELLPADDING=3 bgcolor=black>
             <TR><TD bgcolor=orange>
                 <FONT size =\"-1\" face=\"arial, helvetica\">
@@ -9,19 +8,19 @@
             </TD></TR></TABLE>";
     }
 
-    // Muestra el listado de los registros a partir de una matriz de registros.
-	// El parámetro $id_edit indica el registro que el usuario desea editar (-1)
-	function listado_registros($matriz, $id_edit)
-	{
-        // Cabecera
-		echo "<TABLE BORDER=\"0\" cellspacing=\"1\" cellpadding=\"1\" align=\"center\" width=\"600\">
-            <TR>
-                <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\">Medicamento </FONT></th>
-                <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\">Cantidad </FONT></th>
-                <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\">Importe(€) </FONT></th>
-                <th bgcolor=\"teal\" colspan=\"2\"><FONT color=\"white\" face=\"arial, helvetica\">Operaciones</FONT></th>
-            </TR>";
+    function tabla_header() {
+        echo "<TABLE BORDER=\"0\" cellspacing=\"1\" cellpadding=\"1\" align=\"center\" width=\"600\">
+        <TR>
+            <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\">Medicamento </FONT></th>
+            <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\">Cantidad </FONT></th>
+            <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\">Importe(€) </FONT></th>
+            <th bgcolor=\"teal\" colspan=\"2\"><FONT color=\"white\" face=\"arial, helvetica\">Operaciones</FONT></th>
+        </TR>";
+    }
 
+    // El parámetro $id_edit indica el registro que el usuario desea editar (-1)
+    function tabla_body($matriz, $id_edit)
+    {
         // Bucle que recorre todos los registros de la matriz 
         for ($i=0; $i<sizeof($matriz); $i++) {
             // Si el id_edit no coincide con ningun registro entonces imprimimos los datos
@@ -60,5 +59,81 @@
             </FORM></TR>
             </TABLE>";
     }
+
+    function isValidDate($date) {
+        if (!strstr($date, "/")) return false;
+        $len = strlen($date);
+        if (($len < 8) || ($len > 10)) return false;
+        list($day, $month, $year) = explode('/', $date);
+        return checkdate($month, $day, $year);
+    }
+
+    function isValidName($nombre, $busqueda) {
+        $retVal = true;
+        if ($nombre=="") 
+            echo "No se ha introducido ningún nombre<br>";
+        else if (!empty ($coincide) and strtoupper($busqueda[1]) === strtoupper($nombre))
+            echo "El medicamento '$nombre' ya existe<br>";
+        echo "<p>";
+        return $retVal;
+    }
+
+    function isFormValid_Monedero($concepto, $fecha, $importe) {
+        $retVal = true;
+        if ($concepto=="") {
+            echo "No se ha introducido ningún concepto<br>";
+            $retVal = false;
+        }
+        if (!isValidDate($fecha)) {
+            echo "No se ha introducido una fecha valida<br>";
+            $retVal = false; 
+        }
+        if (!is_numeric($importe)) {
+            echo "No se ha introducido un importe correcto<br>";
+            $retVal = false; 
+        }
+        echo "<p>";
+        return $retVal;
+    }
+
+    function isFormValid($cantidad, $importe) {
+        $retVal = true;
+        if (!isValidDate($cantidad)) {
+            echo "No se ha introducido una cantidad valida<br>";
+            $retVal = false; 
+        }
+        if (!is_numeric($importe)) {
+            echo "No se ha introducido un importe correcto<br>";
+            $retVal = false; 
+        }
+        echo "<p>";
+        return $retVal;
+    }
+
+    function ordenar($matriz, $criterio) {
+        switch ($criterio) {
+            case "nombre":
+                usort($matriz, function($a, $b) {
+                    return $a[1] <=> $b[1];
+                });
+                tabla_registros($matriz, -1);
+                break;
+            case "cantidad";
+                usort($matriz, function($a, $b) {
+                    return $a[2] <=> $b[2];
+                });
+                tabla_registros($matriz, -1);
+                break;
+            case "importe":
+                usort($matriz, function($a, $b) {
+                    return $a[3] <=> $b[3];
+                });
+                tabla_registros($matriz, -1);
+                break;
+            default:
+                tabla_registros($matriz, -1);
+        } 
+    }
+
 
 ?>

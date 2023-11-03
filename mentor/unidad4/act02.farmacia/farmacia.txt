@@ -1,5 +1,4 @@
 0~Gelocatil~25~1.95
-1~Aspirina~115~1.99
+1~Aspirina~100~1.99
 2~Jarabe para la tos~50~2.95
-3~Mercromina~150~1.39
-4~Quina San Martin~100~10.95
+3~Mercromina~150~1.35
