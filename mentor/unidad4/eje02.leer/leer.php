@@ -1,13 +1,13 @@
 <?php
 
     $fichero = "fichero03.txt";
-    $directorio = getcwd();
-    $directorio .= "\unidad4\\eje02.leer";
-    if (!chdir($directorio)) 
-        die ("no se ha accedido al directorio");
-    
+    $path = getcwd();
+    $path .= "/mentor/unidad4/eje02.leer";
+    if (!@chdir($path)) 
+        die ("no se ha accedido al directorio ".$path);
+
 	$id_fichero= @fopen($fichero,"r")
-        or die("no se ha podido abrir " . $directorio);
+        or die("no se ha podido abrir " . $fichero);
         
     while (!feof($id_fichero)){
 		$linea=fgets($id_fichero);
