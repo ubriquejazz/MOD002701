@@ -23,16 +23,18 @@
     		$id_fichero = @fopen($this->nombre_fichero,"r")
             or die("<B>El fichero '$this->nombre_fichero' no se ha podido abrir.</B><P>");
 
-            $regitros = array();    // resultado 
+            $matriz = array();    // resultado 
 
             while(!feof($id_fichero)) {
-                $registro_str = fgets($id_fichero);
+                $registro_str = trim(fgets($id_fichero));
+                //echo $registro_str;
                 if ($registro_str!=""){
-                    array_push($registros, explode('~', $registro_str));
+                    $registro= explode("~", $registro_str);
+                    array_push($matriz, $registro);
                 }
             }
             fclose($id_fichero);
-            return $registros;
+            return $matriz;
         }
 
         function buscar($lo_q_busco) {	
@@ -41,9 +43,9 @@
     		$id_fichero = @fopen($this->nombre_fichero,"r")
                 or die("<B>El fichero '$this->nombre_fichero' no se ha podido abrir.</B><P>");
 
-            $regitros = array();    // resultado 
+            $matriz = array();    // resultado 
             fclose($id_fichero);
-            return $registros;
+            return $matriz;
         }
 
         function alta($nombre, $cantidad, $importe) {
@@ -80,8 +82,23 @@
         }
     }
 
-    function test_construct() {
-        $apoteke = new farmacia(getcwd());
-        print_r($apoteke->leer_todos());
+    function get_directory() {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            // 'This is a server using Windows!';
+            return getcwd()."\unidad4\\act02.farmacia";
+        } 
+        else {
+            // 'This is a server not using Windows!';
+            return getcwd()."/mentor/unidad4/act02.farmacia";
+        }
     }
+
+    function test_reading() {
+        //echo getcwd();
+        $apoteke = new farmacia(get_directory());
+        $matriz = $apoteke->leer_todos();
+        print_r($matriz);
+    }
+
+    test_reading();
 ?>
