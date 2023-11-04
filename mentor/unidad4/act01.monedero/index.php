@@ -84,7 +84,8 @@
 			<?php echo boton_ficticio("Ver listado inicial","index.php?operacion=listado"); ?></TD>
     </TR><TR>
         <TD><FONT size ="-1" face="arial, helvetica" color=red>
-            El balance del monedero es de <b><?php echo $cash->balance_total; ?> </b> &euro;</FONT><P></TD>  
+            El balance del monedero es de <b>
+                <?php echo number_format($cash->balance_total,2,'.',''); ?> </b> &euro;</FONT><P></TD>  
     </TR>
 	</TABLE>
     NOTA: es obligatorio rellenar el campo Concepto.<br> 
