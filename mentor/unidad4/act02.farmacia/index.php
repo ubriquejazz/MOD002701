@@ -109,7 +109,8 @@
     <TABLE BORDER="0" cellspacing="1" cellpadding="1" align="center" width="600">
 		<TR>
 			<TD><FONT size ="-1" face="arial, helvetica">
-				El nº de medicamentos es: <?php echo $apoteke->numero_medicamentos;?></LEFT></FONT><P></TD>
+				El nº de medicamentos es: <?php echo $apoteke->numero_medicamentos;?><P>
+                El mas caro es: <?php echo $apoteke->el_mas_caro;?></LEFT></FONT></TD>
 			<TD valign=top align=right>		
 			<?php echo boton_ficticio("Ver listado inicial","index.php?operacion=listado"); ?></TD>
 		</TR>

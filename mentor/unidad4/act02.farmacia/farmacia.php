@@ -35,7 +35,7 @@
                     $registro = explode('~', $registro_str);
                     if ($registro[3] > $max) {
                         $max = $registro[3];
-                        $this->el_mas_caro = $registro[0];
+                        $this->el_mas_caro = $registro[1];
                     }
                     array_push($registros, $registro);
                     $this->numero_medicamentos++;
