@@ -18,8 +18,67 @@
     <?php
 
     require "farmacia.php";
+    require "funciones.php";
     $apoteke = new farmacia(getcwd());
+    $matriz = $apoteke->leer_todos();
 
+    if (isset($_REQUEST["operacion"])) $operacion = $_REQUEST["operacion"];
+    else $operacion = '';
+
+    if (isset($_REQUEST["operacion2"])) $ordenar_por = $_REQUEST["operacion2"];
+    else $ordenar_por = '';
+
+    echo $ordenar_por;
+
+    tabla_header();         // cabecera de la tabla, falta el body
+    switch ($operacion) {
+
+        case "buscar":
+            $matriz = $apoteke->buscar($_POST["buscar_edit"]);
+            tabla_body($matriz, -1);
+            break;
+
+        case "borrar":
+            $apoteke->borrar($_REQUEST["nume"]);
+            $matriz = $apoteke->leer_todos();
+            tabla_body($matriz, -1);
+            break;
+
+        case "editar":
+            $matriz = $apoteke->leer_todos();
+            tabla_body($matriz, $_REQUEST["nume"]);
+            break;
+
+        case "modificar":            
+            $el_nume = $_REQUEST["el_nume"];
+            $nombre = sintilde($_REQUEST["nombre"]);
+            $cantidad = $_REQUEST["cantidad"];
+            $importe = $_REQUEST["importe"];
+            if (isValidName($nombre, $apoteke->buscar($nombre), $el_nume)  
+                && isFormValid($cantidad, $importe)) {
+                $apoteke->modificar($el_nume, $nombre, $cantidad, $importe);
+            }
+            $matriz = $apoteke->leer_todos();
+            tabla_body($matriz, -1);
+            break;
+
+
+        case "alta":
+            $nombre = sintilde($_REQUEST["nombre"]);
+            $cantidad = $_REQUEST["cantidad"];
+            $importe = $_REQUEST["importe"];
+            if (isValidName($nombre, $apoteke->buscar($nombre), -1) 
+                && isFormValid($cantidad, $importe)) {
+                $apoteke->alta($nombre, $cantidad, $importe);
+            }            
+            $matriz = $apoteke->leer_todos();
+            tabla_body($matriz, -1);
+            break;
+
+        default: // listado
+            // SWITCH($ORDENAR_POR)
+            tabla_body($matriz, -1);
+    }
 
 
 
