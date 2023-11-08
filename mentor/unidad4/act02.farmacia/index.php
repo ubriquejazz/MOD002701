@@ -28,8 +28,6 @@
     if (isset($_REQUEST["operacion2"])) $ordenar_por = $_REQUEST["operacion2"];
     else $ordenar_por = '';
 
-    echo $ordenar_por;
-
     tabla_header();         // cabecera de la tabla, falta el body
     switch ($operacion) {
 
@@ -62,7 +60,6 @@
             tabla_body($matriz, -1);
             break;
 
-
         case "alta":
             $nombre = sintilde($_REQUEST["nombre"]);
             $cantidad = $_REQUEST["cantidad"];
@@ -75,13 +72,27 @@
             tabla_body($matriz, -1);
             break;
 
-        default: // listado
-            // SWITCH($ORDENAR_POR)
+        default: // listado ordenado o no
+            switch ($ordenar_por) {
+                case "por_nombre":
+                    usort($matriz, function($a, $b) {
+                        return $a[1] <=> $b[1];
+                    });
+                    break;
+                case "por_cantidad";
+                    usort($matriz, function($a, $b) {
+                        return $a[2] <=> $b[2];
+                    });
+                    break;
+                case "por_importe":
+                    usort($matriz, function($a, $b) {
+                        return $a[3] <=> $b[3];
+                    });
+                    break;
+            } // inner switch
             tabla_body($matriz, -1);
-    }
-
-
-
+            break;
+    } // outer switch
     
     ?>
 	<TABLE border=0 width=600>

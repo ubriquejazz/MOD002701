@@ -122,30 +122,5 @@
         return $retVal;
     }
 
-    function ordenar($matriz, $criterio) {
-        switch ($criterio) {
-            case "nombre":
-                usort($matriz, function($a, $b) {
-                    return $a[1] <=> $b[1];
-                });
-                tabla_registros($matriz, -1);
-                break;
-            case "cantidad";
-                usort($matriz, function($a, $b) {
-                    return $a[2] <=> $b[2];
-                });
-                tabla_registros($matriz, -1);
-                break;
-            case "importe":
-                usort($matriz, function($a, $b) {
-                    return $a[3] <=> $b[3];
-                });
-                tabla_registros($matriz, -1);
-                break;
-            default:
-                tabla_registros($matriz, -1);
-        } 
-    }
-
 
 ?>
