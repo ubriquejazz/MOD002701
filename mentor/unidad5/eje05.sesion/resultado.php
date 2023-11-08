@@ -1,24 +1,6 @@
 ﻿<?php
 
-// Función que muestra los datos de la sesión 
-function dame_datos_sesion()
-{
-	return "El identificador devuelto por la función session_id() es:<P>
-			<B>
-				<FONT color=blue>".session_id()."</FONT>
-			</B><P>
-			El fichero que almacena los datos del identificador se 
-					ha guardado en el directorio:<P>
-			<B>
-				<FONT color=blue>".session_save_path()."</FONT>
-			</B><P>
-			El nombre definido en php.ini para la sesión 
-					(nombre de la cookie) es: <P>
-			<B>
-				<FONT color=blue>".session_name()."</FONT>
-			</B><P>";
-}
-
+	require_once "funciones.php";
 
 /******** Sesión usuario anónimo *********/
 if ($_GET["tipo"]==1)
@@ -68,8 +50,7 @@ if ($_GET["tipo"]==3)
 	
 	// Mostramos la información de la sesión
 	$resultadoStr= "<CENTER><H1>Sesión típica con usuario registrado</H1>
-					<P><H3>Introduce los datos para registrar la sesión</H3>";
-				 
+					<P><H3>Introduce los datos para registrar la sesión</H3>";				 
 	
 	$resultadoStr.= "<TABLE border=1 WIDTH=300><TR><TD>
 		<FORM METHOD=\"POST\" ACTION=\"".$_SERVER['PHP_SELF']."?".SID."&tipo=3\">
@@ -103,14 +84,13 @@ if ($_GET["tipo"]==3)
 	$resultadoStr.= "la función <B>session_encode()</B>. Al final 
 			de la cadena ya no aparece usuario: <P><B>$cadena</B><P>";
 	
-	
 } // END Sesión típica con usuario registrado
 
 // Página HTML del resultado
 echo "<HTML>
 		<HEAD><TITLE>Ejemplo 5 - Unidad 5 - Curso Iniciación de PHP 5</TITLE></HEAD>
 		<BODY>$resultadoStr
-		<BR><BR><input type=button onClick='window.location.href = \"index.php\"' value='Volver a la página anterior'>
+		<BR><BR><input type=button onClick='window.location.href = \"sesion01.php\"' value='Volver a la página anterior'>
 		</BODY>		
 		</HTML>
 	";

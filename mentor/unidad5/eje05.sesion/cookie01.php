@@ -35,14 +35,14 @@
 		}
 
 		// Guardamos en el elemento $contador de la matriz fecha 
-		SetCookie("fecha[$contador]",$fecha_nueva, time()+3600000);
-		SetCookie("contador",$contador, time()+3600000); 
+		setcookie("fecha[$contador]",$fecha_nueva, time()+3600000);
+		setcookie("contador",$contador, time()+3600000); 
 	}
 	else  //si la cookie no existe, la creamos
 	{		
 		$fecha_ultima = "Ésta es la primera vez que nos visita";
-		SetCookie("fecha[1]",$fecha_nueva, time()+3600000);
-		SetCookie("contador",1, time()+3600000); 
+		setcookie("fecha[1]",$fecha_nueva, time()+3600000);
+		setcookie("contador",1, time()+3600000); 
 		$contador=1;
 	}
 	
