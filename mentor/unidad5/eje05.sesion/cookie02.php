@@ -28,8 +28,8 @@
 	// Añadimos al resultado el formulario
   	$resultadoStr = "<FORM ACTION=\"cookie02.php\" METHOD=POST>
 	  	Nombre de usuario: <INPUT TYPE=\"text\" NAME=\"tu_nombre\"><P>
-	  	Duración cookie (entre 1 y 60 segundos): <INPUT TYPE=\"text\" NAME=\"duracion\" value=10>
-	  	<P><INPUT TYPE=\"submit\" VALUE=\"Crear cookie\" name=\"crearcookie\">
+	  	Duración (entre 1 y 60s): <INPUT TYPE=\"text\" NAME=\"duracion\" value=10><P>
+		<INPUT TYPE=\"submit\" VALUE=\"Crear cookie\" name=\"crearcookie\">
 	  	<INPUT TYPE=\"submit\" VALUE=\"Borrar cookie\" name=\"borrarcookie\">
 	  	<INPUT TYPE=\"submit\" VALUE=\"Actualizar página\" name=\"actualizacookie\">
 	  	</FORM>" . $resultadoStr; 
