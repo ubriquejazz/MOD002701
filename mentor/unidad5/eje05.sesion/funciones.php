@@ -19,18 +19,11 @@
     function dame_datos_sesion()
     {
         return "El identificador devuelto por la función session_id() es:<P>
-                <B>
-                    <FONT color=blue>".session_id()."</FONT>
-                </B><P>
-                El fichero que almacena los datos del identificador se 
-                        ha guardado en el directorio:<P>
-                <B>
-                    <FONT color=blue>".session_save_path()."</FONT>
+                <B><FONT color=blue>".session_id()."</FONT>
                 </B><P>
                 El nombre definido en php.ini para la sesión 
                         (nombre de la cookie) es: <P>
-                <B>
-                    <FONT color=blue>".session_name()."</FONT>
+                <B><FONT color=blue>".session_name()."</FONT>
                 </B><P>";
     }
 
@@ -46,7 +39,7 @@
                 </TR>";	
         }
     }
-    
+
     // Método que crea los botones de cada opción de los registros utilizando una tabla HTML 
     function boton_ficticio($caption,$url) {
         return "<TABLE border=1 CELLSPACING=0 CELLPADDING=3 bgcolor=black>

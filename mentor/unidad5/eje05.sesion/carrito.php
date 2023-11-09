@@ -3,6 +3,12 @@
 	require "funciones.php";
 	session_start();
 
+	if (isset($_GET["op"]) && $_GET["op"]=="limpiar") {
+		$_SESSION = array();
+		session_destroy();
+		setcookie(session_name(), 123, time() - 1000);
+	}
+
 	// Si el usuario indica un producto distinto de vacío
 	if ( (isset($_POST["producto"])) && (trim($_POST["producto"])!="") ){
 		$encontrado=0;
@@ -78,6 +84,8 @@
 		echo "</TABLE>";
 	}
 	?>
+	
+	<br><a href="carrito.php?op=limpiar"> Limpiar </a>
 	</CENTER></TT>
 </body>
 </html>
