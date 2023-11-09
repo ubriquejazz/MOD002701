@@ -26,4 +26,17 @@
                 </B><P>";
     }
 
+    function tabla_header($aplicacion) {
+        if ($aplicacion === 'carrito') {
+            echo'<P>El contenido de la cesta de la compra es:<br>';
+            echo "<TABLE BORDER=\"0\" cellspacing=\"1\" cellpadding=\"1\" align=\"center\" width=\"600\">
+                <TR>
+                    <th bgcolor=\"yellow\"><FONT color=\"black\" face=\"arial, helvetica\">
+                    Artículo</FONT></th>
+                    <th bgcolor=\"yellow\"><FONT color=\"black\" face=\"arial, helvetica\">
+                    Cantidad</FONT></th>
+                </TR>";	
+        }
+    }
+
 ?>
