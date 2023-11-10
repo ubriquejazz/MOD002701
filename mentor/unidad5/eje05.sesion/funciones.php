@@ -5,6 +5,10 @@
             $usu['nombre'] = "usuario";
             $usu['rol'] = 0;
         }
+        else if ($nombre === "admin" and $clave === "1234") {
+            $usu['nombre'] = "admin";
+            $usu['rol'] = 1;
+        }
         return $usu;
     }
 

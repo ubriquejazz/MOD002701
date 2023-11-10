@@ -1,3 +1,39 @@
+<?php
+
+    if (isset($_COOKIE["contador"])) {
+
+        // Si existe la cookie contador, aumentamos el contador de visitas
+        $contador=$_COOKIE["contador"];   
+        $contador++;
+
+        // Si llega a 5, reseteamos y borramos todos las cookies
+        if ($contador > 5) {
+            $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+			foreach($cookies as $cookie) {
+				$partes = explode('=', $cookie);		// separamos en partes el contenido de la cookie
+				$nombre = trim($partes[0]);				// nombre de la cookie en la posicion 0
+				setcookie($nombre, '', time()-1000);	// tiempo anterior al actual
+			}
+            $contador=0;
+        }
+        else
+		    setcookie("contador",$contador, time()+3600000); 
+	}
+	else  //si la cookie no existe, la creamos
+	{		
+		//$fecha_ultima = "Ésta es la primera vez que nos visita";
+		//setcookie("fecha[1]",$fecha_nueva, time()+3600000);
+
+        //$num = $_COOKIE["contador"]; // para guardar el número de entradas compradas
+        //$matriz = $_COOKIE["asientos"]; // para almacenar los asientos comprados (matriz)
+
+		setcookie("contador",1, time()+3600000); 
+		$contador=1;
+	}
+    
+    if (isset($contador)) echo $contador;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,22 +46,19 @@
     <TABLE border="0" align="center" cellspacing="3" cellpadding="3" width="650">
         <TR><TH colspan="2" width="100%" bgcolor="green"><FONT size="6" color="white">Comprar entradas de teatro</FONT></TH></TR>
     </TABLE><P>
+
     <TABLE border='0' width='600'>
-    <TR>
-        <TD valign=top align=CENTER colspan=2>
-        <H2> ¡Bienvenid@ a la página de reserva de localidades!    </H2><BR></TD>
-    </TR></TABLE>
+        <TR><TD valign=top align=CENTER colspan=2>
+        <H2> ¡Bienvenid@ a la página de reserva de localidades!</H2><BR></TD>
+        </TR>
+    </TABLE>
 
     <TABLE BORDER='0' cellspacing='1' cellpadding='0' align='center' width='200'>
         <TR><TD align=center>Escenario<BR><HR></TD></TR>
     </TABLE><BR>
     
     <TABLE BORDER='0' cellspacing='3' cellpadding='0' align='center'>
-        <?php
-            
-            $num = $_COOKIE["num_entradas"]; // para guardar el número de entradas compradas
-            $matriz = $_COOKIE["asientos"]; // para almacenar los asientos comprados (matriz)
-
+        <?php 
             $color='lime';
             for ($i=0; $i<15; $i++) {
                 echo "<TR><TD><font size=1>".($i+1)."</font></TD>";
