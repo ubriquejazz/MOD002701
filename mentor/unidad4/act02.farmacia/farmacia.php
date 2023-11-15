@@ -114,7 +114,7 @@
             for ($i=0;$i<sizeof($matriz);$i++) {
                 
                 // Si el id del registro corresponde al que queremos editar, modifico
-                if ($$matriz[$i][0] == $id_to_modi) {
+                if ($matriz[$i][0] == $id_to_modi) {
                     $matriz[$i][1]=trim($nombre); 
                     $matriz[$i][2]=$cantidad;
                     $matriz[$i][3]=$importe;

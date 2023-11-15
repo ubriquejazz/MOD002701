@@ -16,39 +16,72 @@
             }
         }
 
-        function leer_todos() {
-            
-            // Abrimos el fichero de datos en modo lectura
+        function leer_filas() {
     		$id_fichero = @fopen($this->nombre_fichero,"r")
             or die("<B>El fichero '$this->nombre_fichero' no se ha podido abrir.</B><P>");
 
-            $registros = array();    // resultado 
+            $mapa = array();    // resultado 
             $this->numero_filas=0;
 
             while(!feof($id_fichero)) {
-                $registro_str = trim(fgets($id_fichero));
-                if ($registro_str!=""){
-                    array_push($registros, $registro_str);
+                $linea_str = trim(fgets($id_fichero));
+                if ($linea_str!=""){
+                    $fila = array(); 
+                    for($i=0; $i<strlen($linea_str); $i++) {
+                        array_push($fila, $linea_str[$i]);
+                    }
+                    array_push($mapa, $fila);
                     $this->numero_filas++;
                 }
             }
             fclose($id_fichero);
-            return $registros;
+            return $mapa;
         }
 
-        
-    }
-    // Para cambiar el color de esta imagen, la incluimos dentro de la etiqueta <TD bgcolor=color></TD> 
-    // cuyo color cambia en función del estado del asiento.
-    function pintar($i, $j, $color) {
-        echo "<TD bgcolor=".$color.">
-            <A href=index.php?operacion=exec_comprar&la_fila=".$i."&el_asiento=".$j."&accion=0>
-            <img src=1px.gif height=10 width=10 border=1></A></TD>";
-    }
+        function colorear($fila, $col) {
+            $mapa = $this->leer_filas();
+            if ($mapa[$fila][$col] == 0) return 'lime';
+            else return 'red';
+        }
 
-    $play = new asientos(getcwd());
-    $matriz = $play->leer_todos();
-    print_r($matriz);
-    echo $play->numero_filas;
+        function actualizar($fila, $col, $valor) {
+
+            $id_fichero_temp = @fopen("basura.tmp","w")
+            or die("<B>El fichero 'basura.tmp' no se ha podido abrir.</B><P>");
+
+            $mapa = $this->leer_filas();
+            $mapa[$fila][$col] = $valor;
+
+            for ($i=0; $i<count($mapa); $i++) {
+                // Si estamos escribiendo el registro >0 entonces hay que añadir NL
+                if ($i>0) fputs($id_fichero_temp, "\n"); 
+    
+                // Escribimos de nuevo los datos en el fichero de mapa 
+                $linea_str = implode("", $mapa[$i]);					
+                fputs($id_fichero_temp, $linea_str);
+            }
+            fclose($id_fichero_temp);
+            unlink($this->nombre_fichero);
+            rename("basura.tmp", $this->nombre_fichero);
+        }
+        
+        function mostrar_asientos() {
+            $mapa = $this->leer_filas();
+            for ($i=0; $i<count($mapa); $i++) {
+                for ($j=0; $j<count($mapa[0]); $j++)
+                    echo $mapa[$i][$j];
+                echo "\n";
+            }
+        }
+
+    } // end class
+
+    function test01() {
+        $play = new asientos(getcwd());
+        $play->leer_filas();
+        // $play->numero_filas;
+        $play->actualizar(2,0, 1);
+        $play->mostrar_asientos();
+    }
 
 ?>
