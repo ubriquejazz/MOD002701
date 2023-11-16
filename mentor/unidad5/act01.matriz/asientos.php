@@ -76,7 +76,7 @@
 
     } // end class
 
-    function test01() {
+    function test_asientos() {
         $play = new asientos(getcwd());
         $play->leer_filas();
         // $play->numero_filas;

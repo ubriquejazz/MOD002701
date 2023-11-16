@@ -3,40 +3,58 @@
     require_once "asientos.php";
     require_once "funciones.php";
 
-    session_start();
+    $play = new asientos(getcwd());
+    $mapa = $play->leer_filas();
+    $buffer = new Buffer();
+    $msg = "<FONT size=3 color=green> Escenario</FONT>";
 
-    if (isset($_GET['op'])) $operacion = $_GET['op'];
-    else $operacion = "";
-    if (isset($_GET['la_fila'])) $fila = $_GET['la_fila'];
-    else $fila = 0;
-    if (isset($_GET['el_asiento'])) $col = $_GET['el_asiento'];
-    else $col = 0;
-
-    $coord = array($fila, $col);
-    if ($operacion == 'devolver')
-        echo "Gracias por devolver la entrada.";
-    else 
-        echo "Gracias por comprar en esta página.";
-
-    if (!isset($_COOKIE["contador"])) {
-		$contador=0;
-        setcookie("contador", 0, time()+3600000);
-        $_SESSION["naranja"][0] = $coord;
+    if (isset($_POST['confirmar'])) {
+        $seleccion = $buffer->read();
+        foreach ($seleccion as $a) {
+            $play->actualizar($a[0],$a[1],1);
+        }
+        $msg = "<FONT size=3 color=green> Saved cookies";
+        $msg .= "<BR>Pulse reload to continue.</FONT>";
     }
-    else {
-        $contador=$_COOKIE["contador"];   
-        $contador++;
-        if ($contador > 4) {
-            echo "Sólo se permite comprar 5 entradas como máximo.";
-            $contador=0;
-            clean_cookies();
-        }
-        else {
-            setcookie("contador", $contador, time()+3600000); 
-            $_SESSION["naranja"][$contador] = $coord;         
-        }
-	}
+    else if (isset($_POST['borrar'])) {
 
+		// Vemos si hay definidas cookies
+		if (isset($_SERVER['HTTP_COOKIE'])) {
+
+			// Separamos todas las cookies mediante el caracter ";"
+			$cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+			foreach($cookies as $cookie) {
+				$partes = explode('=', $cookie);		// separamos en partes el contenido de la cookie
+				$nombre = trim($partes[0]);				// nombre de la cookie en la posicion 0
+				setcookie($nombre, '', time()-1000);	// tiempo anterior al actual
+			}
+		}
+        $seleccion = array();
+        $msg = "<FONT size=3 color=green> Cookies reseted";
+        $msg .= "<BR>Pulse reload to continue.</FONT>";
+    }
+    else if (isset($_GET['la_fila'])) {
+        $x0 = $_GET['la_fila'];
+        $x1 = $_GET['el_asiento'];
+
+        $msg = "<FONT size=3 color=green>Gracias por ";
+        $contador=count($_COOKIE);   
+    
+        if ($contador<5 and $_GET['op'] == 'comprar') {
+            $msg .= "comprar en esta pagina.";
+            $buffer->add([$x0, $x1]);
+        }
+        else if ($contador>0 and $_GET['op'] == 'devolver') {
+            $msg .= "devolver la entrada.";
+            $buffer->erase([$x0, $x1]);
+        }
+        else if ($contador==5) {
+            $msg = "<FONT size=3 color=red>Sólo se permite comprar 5 entradas como máximo.";
+        }
+        $msg .= "<BR>Pulse reload to continue.</FONT>";
+    }
+    $seleccion = $buffer->read();
+    echo ".";
 ?>
 
 <!DOCTYPE html>
@@ -60,14 +78,18 @@
     </TABLE>
 
     <TABLE BORDER='0' cellspacing='1' cellpadding='0' align='center' width='200'>
-        <TR><TD align=center>Escenario<BR><HR></TD></TR>
+        <TR><TD align=center> <?php echo $msg; ?></TD></TR>
     </TABLE><BR>
+
+    <FORM method="post" action="index.php">
+		<INPUT TYPE="submit" name="borrar" value="Reset"> 
+        <INPUT TYPE="submit" name="confirmar" value="Confirm">
+		<INPUT TYPE="submit" name="recargar" value="Reload">
+    </FORM>
     
-    <TABLE BORDER='0' cellspacing='3' cellpadding='0' align='center'>
         <?php 
-            $play = new asientos(getcwd());
-            $mapa = $play->leer_filas();
-            tabla_asientos($mapa, $_SESSION["naranja"]);
+            echo "<TABLE BORDER='0' cellspacing='3' cellpadding='0' align='center'>";
+            tabla_asientos($mapa, $seleccion);
         ?>
 
     <TABLE>
@@ -75,6 +97,7 @@
         <TR><TD bgcolor=orange><img src=1px.gif height=10 width=10 border=1></TD><TD><font size=2>Butaca reservada.</font></TD></TR>
         <TR><TD bgcolor=red><img src=1px.gif height=10 width=10 border=1></TD><TD><font size=2>Butaca ocupada.</font></TD></TR>
     </TABLE>
+
     </center>
 </body>
 </html>
