@@ -11,7 +11,7 @@ Para conocer la longitud de una cadena debemos usar la función{
 ::Q202::
 Para leer el contenido de la cookie "clave" debemos el siguiente comando: {
     ~setcookie("clave");
-    ~$_COOKIE["clave"];
+    =$_COOKIE["clave"];
     ~setcookie("clave", 100);
     ~isset($_COOKIE["clave"]);
 }
@@ -21,21 +21,20 @@ Indica la respuesta correcta sobre cookies {
     ~Las cookies son usadas con poca frecuencia por las webs.
     ~Las cookies son unos ficheros de texto muy grandes que no contienen información sobre el propio cliente.
     ~La información de una cookie está definida en el protocolo FTP.
-    ~Las cookies se guardan en el ordenador del propio cliente.
+    =Las cookies se guardan en el ordenador del propio cliente.
 }
 
 ::Q204:: 
 Para copiar un fichero hay que usar la función siguiente {
     ~unlink.
     ~is_file.
-    ~fcopy.
+    =fcopy.
     ~fputs.
 }
 
-
 ::Q205:: 
 Para mover el puntero en un fichero tantas posiciones hacia delante como se desee se usa la orden siguiente {
-    ~fseek.
+    =fseek.
     ~ftell.
     ~fread.
     ~feof.
@@ -44,17 +43,18 @@ Para mover el puntero en un fichero tantas posiciones hacia delante como se dese
 ::Q206::  
 Si al abrir un fichero se pone como segundo parámetro el valor "a+", por ejemplo, fopen("fichero.php","a+"), se realiza la operación siguiente {
     ~Se abre el fichero para lectura y escritura, y se sitúa el puntero del fichero al comienzo del mismo.
-    ~Abre el fichero para lectura y escritura (añadiendo); sitúa el puntero del fichero al final del mismo. Si el fichero no existe, trata de crearlo.
+    =Abre el fichero para lectura y escritura (añadiendo); sitúa el puntero del fichero al final del mismo. Si el fichero no existe, trata de crearlo.
     ~Se abre el fichero para sólo lectura, y se sitúa el puntero del fichero al comienzo del mismo.
     ~Se abre el fichero sólo para sólo escritura, y se sitúa el puntero del fichero al final del mismo.
 }
 
 ::Q207::  
-Suponiendo que $a contenga "ABCDEFG" y $b "HIJ", indica qué valor devuelve la siguiente función de usuario: echo operacion($a,$b); 
+Suponiendo que $a contenga "ABCDEFG" y $b "HIJ", indica qué valor devuelve la siguiente función de usuario: 
+    echo operacion($a,$b); 
     function operacion($x,$y) 
-        return strlen($x)-strlen($y); 
+    return strlen($x)-strlen($y); 
 {
-    ~El valor 4.
+    =El valor 4.
     ~La cadena "ABC".
     ~La cadena "ABCDEFG".
     ~El valor 3.
@@ -64,7 +64,7 @@ Suponiendo que $a contenga "ABCDEFG" y $b "HIJ", indica qué valor devuelve la s
 ::Q208:: 
 Podemos ordenar los elementos de una matriz teniendo en cuenta su contenido y utilizando una función de comparación definida por el usuario usando la siguiente función {
     ~rsort.
-    ~uasort.
+    =uasort.
     ~arsort.
     ~shuffle.
 }
@@ -73,7 +73,7 @@ Podemos ordenar los elementos de una matriz teniendo en cuenta su contenido y ut
 Para comprobar si una fecha es válida, hay que usar la siguiente función de PHP {
     ~setlocale.
     ~urlencode.
-    ~checkdate.
+    =checkdate.
     ~strftime.
 }
 
@@ -81,7 +81,7 @@ Para comprobar si una fecha es válida, hay que usar la siguiente función de PH
 Para terminar un script cuando nos interese mostrando un mensaje de texto, hay que usar la orden siguiente {
     ~exit.
     ~sleep.
-    ~die.
+    =die.
     ~usleep.
 }
 
