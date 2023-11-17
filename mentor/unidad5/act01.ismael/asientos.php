@@ -18,18 +18,10 @@ class asientos {
 
     function leer_mapa() {
 
-        $id_fichero = @fopen($this->nombre_mapa,"r") 
+        $id_fichero = @fopen($this->nombre_mapa, "r") 
         or die("<B>El fichero '$this->nombre_mapa' no se ha podido abrir.</B><P>");
 
         $asientos = array();
-        while(!feof($id_fichero)) {
-            $asientos_str = fgets($id_fichero);
-            if($asientos_str != "") {
-                $fila = explode("_", $asientos_str);
-                array_push($asientos, $fila);
-            }
-        }
-        /*
         while(!feof($id_fichero)) {
             $linea_str = trim(fgets($id_fichero));
             if ($linea_str!=""){
@@ -40,26 +32,27 @@ class asientos {
                 array_push($asientos, $fila);
             }
         }
-        */
+        
         fclose($id_fichero);
         return $asientos;
     }
 
+    // devuelve 1 si el cambio se escrito bien
     function reservar($cambios)
     {
-        $id_fichero_temp = @fopen("basura.tmp","w") 
+        $id_fichero_temp = @fopen("basura.tmp", "w") 
         or die("<B>El fichero 'basura.tmp' no se ha podido abrir.</B><P>");
 
         $asientos = $this->leer_mapa();
-        $vacio = true;  //compruebo que todas las seleccionadas estan vacias
+        $vacio = 1;  //compruebo que todas las seleccionadas estan vacias
 
         for($i = 0; $i<sizeof($cambios); $i++)
         {
             $x = $cambios[$i][0];
             $y = $cambios[$i][1];
             if($asientos[$x][$y] == 1) {
-                $vacio = false;
-                break;
+                $vacio = 0;
+                break; // no se puede reservar un asiento ocupado
             }
         }
 
@@ -74,13 +67,14 @@ class asientos {
 
         //bucle que recorra el array de array de $asientos
         for($i = 0; $i<sizeof($asientos); $i++){
-            $asientos_str = implode("_", $asientos[$i]);
+            if ($i>0) fputs($id_fichero_temp, "\n");
+            $asientos_str = implode("", $asientos[$i]);
             fputs($id_fichero_temp,$asientos_str);
         }
-        
         fclose($id_fichero_temp);
         unlink($this->nombre_mapa);
         rename("basura.tmp", $this->nombre_mapa);
+        return $vacio;
     }
 }
 
@@ -90,12 +84,12 @@ function test_leer() {
 }
 
 function test_reserva() {
-    $cambio = array([0,0], [1,2], [5,3], [4,7]);
+    $cambio = array([0,0], [0,1]);
     $play = new asientos(getcwd());
     $asientos = $play->leer_mapa();
-    $asientos = $play->reservar($cambio);
+    echo $play->reservar($cambio);
 }
 
-//test_reserva()
+// test_reserva()
 
 ?>

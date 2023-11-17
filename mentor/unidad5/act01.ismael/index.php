@@ -36,7 +36,7 @@
 
             // ese asiento ya esta en el historial
             else if($ubic != '') {
-                array_splice($_SESSION['historial'],$ubic,1);
+                array_splice($_SESSION['historial'], $ubic, 1);
                 $_SESSION['butacas']--;
                 $mensaje = "Butaca deseleccionada correctamente";
             }
@@ -62,7 +62,7 @@
             break;
     }
 
-    echo $_SESSION['butacas'];
+    echo "."; //$_SESSION['butacas'];
 ?>
 
 <!DOCTYPE html>
