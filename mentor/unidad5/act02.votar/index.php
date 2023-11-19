@@ -1,5 +1,10 @@
 <?php
 
+    require "votos.php";
+
+    $obj = new votos(getcwd());
+    $votos = $obj->leer_todos();
+
     $preguntas = array (
         "Más de una vez al día",
         "Una vez al día",
@@ -7,12 +12,18 @@
         "Una vez al mes",
         "No accedo");
 
-    echo $_POST["voteID"];
-    $msg_ok = "<FONT size=3 color=blue>¡Gracias por votar!</FONT><P>";
-    $msg_ko = "<FONT size=3 color=red>¡Sólo se permite votar una vez!</FONT><P>";
-
-    // Supongamos que $votos es tu array de votos
-    $votos = array(25, 30, 45, 20, 10);
+    $msg = "";
+    if (isset($_POST["voteID"])) {
+        
+        if (isset($_COOKIE["voto"]) and $_COOKIE["voto"]!="")
+            $msg = "<FONT size=3 color=red>¡Sólo se permite votar una vez!</FONT><P>";
+        else {
+            setcookie("voto", $_POST["voteID"], time()+60);
+            $msg = "<FONT size=3 color=blue>¡Gracias por votar!</FONT><P>";
+            $actual = $votos[$_POST["voteID"]];
+            $obj->modificar($_POST["voteID"], $actual+1);
+        }
+    }
     $totalVotos = array_sum($votos);
 ?>
 
@@ -27,7 +38,7 @@
 <body bgcolor=91E5F2 text=000000 link=000000 vlink=000000>
 
     <CENTER>
-    <BR><?php echo $msg_ok; ?>
+    <BR><?php echo $msg; ?>
 
     <TABLE border=1><TR><TD>
     <TABLE width=100% border=0 cellspacing=0 cellpadding=10>
@@ -51,27 +62,27 @@
     <BR>
 
     <TABLE cellSpacing=0 cellPadding=2 width="100%" border=0>
-    <TR><TD vAlign=top width="100%"><CENTER>
-	<TABLE cellspacing=2 cellPadding=0 bgColor=#000000 border=0>
-	<TR><TD colspan=2 height=50 bgcolor=CCCCCC>
-		<FONT size=3><B>&nbsp;&nbsp; Resultados</B></TD></TR>
-       	<TR><TD colspan=2> 
-            <TABLE cellSpacing=2 cellPadding=5 bgColor=#ffffff border=0>
-            <TR><TD>
-                <BR><B>¿Cuántas veces accedes a Internet?</B><BR><BR>
-                <TABLE>
-                    <?php
-                        foreach ($votos as $index => $voto) {
-                            $porcentaje = ($voto / $totalVotos) * 100;
-                            echo "<TR><TD>" . $preguntas[$index] . "</TD><TD>" . 
-                                round($porcentaje, 2) . "% (" . $voto . ")</TD></TR>";
-                        }
-                    ?>
-                </TABLE>   
-			</TD></TR>
-			</TABLE> <!-- Tabla de resultados -->
-		</TD></TR></TABLE>
-    </TD></TR>
+        <TR><TD vAlign=top width="100%"><CENTER>
+	    <TABLE cellspacing=2 cellPadding=0 bgColor=#000000 border=0>
+        <TR><TD colspan=2 height=50 bgcolor=CCCCCC>
+            <FONT size=3><B>&nbsp;&nbsp; Resultados</B></TD></TR>
+            <TR><TD colspan=2> 
+                <TABLE cellSpacing=2 cellPadding=5 bgColor=#ffffff border=0>
+                <TR><TD>
+                    <BR><B>¿Cuántas veces accedes a Internet?</B><BR><BR>
+                    <TABLE>
+                        <?php
+                            foreach ($votos as $index => $voto) {
+                                $porcentaje = ($voto / $totalVotos) * 100;
+                                echo "<TR><TD>" . $preguntas[$index] . "</TD><TD>" . 
+                                    round($porcentaje, 2) . "% (" . $voto . ")</TD></TR>";
+                            }
+                        ?>
+                    </TABLE>   
+                </TD></TR>
+                </TABLE> <!-- Tabla de resultados -->
+            </TD></TR></TABLE>
+        </TD></TR>
     </TABLE>
   
     <BR><CENTER>
