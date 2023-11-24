@@ -1,6 +1,16 @@
 ﻿<?php
 
-	require_once "funciones.php";
+    // Función que muestra los datos de la sesión 
+    function dame_datos_sesion()
+    {
+        return "El identificador devuelto por la función session_id() es:<P>
+                <B><FONT color=blue>".session_id()."</FONT>
+                </B><P>
+                El nombre definido en php.ini para la sesión 
+                        (nombre de la cookie) es: <P>
+                <B><FONT color=blue>".session_name()."</FONT>
+                </B><P>";
+    }
 
 	/******** Sesión usuario anónimo *********/
 	if ($_GET["tipo"]==1)

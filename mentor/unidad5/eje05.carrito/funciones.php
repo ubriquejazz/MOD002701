@@ -1,34 +1,10 @@
 <?php
 
-    function comprobar_usuario($nombre, $clave){
-        if ($nombre === "usuario" and $clave === "1234") {
-            $usu['nombre'] = "usuario";
-            $usu['rol'] = 0;
-        }
-        else if ($nombre === "admin" and $clave === "1234") {
-            $usu['nombre'] = "admin";
-            $usu['rol'] = 1;
-        }
-        return $usu;
-    }
-
     function update_cookie($nombre, $duracion) {
         if (setcookie("usuario", $nombre, time()+$duracion))
             return "La cookie ha sido creada. ¡Pulsa el botón 'Actualizar página' para ver el resultado!<P>";
         else 
             return "ERROR: el navegador no acepta Cookies<P>";
-    }
-
-    // Función que muestra los datos de la sesión 
-    function dame_datos_sesion()
-    {
-        return "El identificador devuelto por la función session_id() es:<P>
-                <B><FONT color=blue>".session_id()."</FONT>
-                </B><P>
-                El nombre definido en php.ini para la sesión 
-                        (nombre de la cookie) es: <P>
-                <B><FONT color=blue>".session_name()."</FONT>
-                </B><P>";
     }
 
     function tabla_header($aplicacion) {

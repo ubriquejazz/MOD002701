@@ -1,10 +1,7 @@
 <?php
-
-    require "funciones.php";
     session_start();
-    
     if (!isset($_SESSION['usuario'])) {
-        header("Location: sesion02_login.php?redirigido=true");
+        header("Location: login.php?redirigido=true");
     }
 ?>
 
@@ -17,6 +14,6 @@
 </head>
 <body>
     <?php echo "Bienvenido " . $_SESSION['usuario']; ?>
-    <br><a href="sesion02_logout.php"> exit </a>
+    <br><a href="logout.php"> exit </a>
 </body>
 </html>

@@ -1,8 +1,19 @@
 <?php
+
+    function comprobar_usuario($nombre, $clave){
+        if ($nombre === "usuario" and $clave === "1234") {
+            $usu['nombre'] = "usuario";
+            $usu['rol'] = 0;
+        }
+        else if ($nombre === "admin" and $clave === "1234") {
+            $usu['nombre'] = "admin";
+            $usu['rol'] = 1;
+        }
+        return $usu;
+    }
+
     /* form de login, si va bien abre sesion, guarda nombre de 
     usuario y redirige a main.php. si va mal mensaje de error */
-
-    require "funciones.php";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usu = comprobar_usuario($_POST['usuario'], $_POST['clave']);
@@ -13,7 +24,7 @@
         else {
             session_start();
             $_SESSION['usuario'] = $_POST['usuario'];
-            header("Location: sesion02_main.php");
+            header("Location: index.php");
         }
     }
 ?>
@@ -34,7 +45,7 @@
         echo "<p> Revise usuario, contrasena</p>";
     }
 ?>
-<form method="POST" action="sesion02_login.php">
+<form method="post" action="login.php">
     Usuario <input value="<?php ?>" id="usuario" name="usuario" type="text">
     Clave <input id="clave" name="clave" type="password">
     <input value="ok" type="submit">

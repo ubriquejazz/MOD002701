@@ -85,7 +85,7 @@
 	}
 	?>
 	
-	<br><a href="carrito.php?op=limpiar"> Limpiar </a>
+	<br><a href="index.php?op=limpiar"> Limpiar </a>
 	</CENTER></TT>
 </body>
 </html>
