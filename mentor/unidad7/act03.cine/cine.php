@@ -70,9 +70,9 @@ class cine {
     
 	// N� total de pel�culas
 	function nume_cines () {
-    		$sql_script = "SELECT * FROM cine";
-    		$this->ejecuta_SQL($sql_script);
-    		return mysql_num_rows($this->datos);
+		$sql_script = "SELECT * FROM cine";
+		$resultado=$this->ejecuta_SQL($sql_script);
+    	return $resultado->rowCount();
 	}
     	
 	// Borrar cine
@@ -87,25 +87,24 @@ class cine {
     // A�adir o modificar cine
 	function introduce($id_to_edit, $ver) {
     		
-	   $campos=array(	
+	   		$campos=array(	
     	    	0=>array(0=>"nombre_cine",1=>"Nombre del cine",2=>50, 3=>100, 4=>""),
     	    	1=>array(0=>"nombre_peli",1=>"Nombre de la pel&iacute;cula",2=>50, 3=>100, 4=>""),
     	    	2=>array(0=>"descripcion", 1=>"Descripci&oacute;n",2=>70, 3=>200, 4=>""),
     	    	3=>array(0=>"sesion1",1=>"Sesi&oacute;n 1 (hora)",2=>5, 3=>5, 4=>"16:00"),
-	    	4=>array(0=>"sesion2",1=>"Sesi&oacute;n 2 (hora)",2=>5, 3=>5, 4=>"19:00"),
-	    	5=>array(0=>"sesion3",1=>"Sesi&oacute;n 3 (hora)",2=>5, 3=>5, 4=>"22:00"),
+	    		4=>array(0=>"sesion2",1=>"Sesi&oacute;n 2 (hora)",2=>5, 3=>5, 4=>"19:00"),
+	    		5=>array(0=>"sesion3",1=>"Sesi&oacute;n 3 (hora)",2=>5, 3=>5, 4=>"22:00"),
     	    	6=>array(0=>"nume_filas",1=>"N� filas del cine",2=>2, 3=>2, 4=>10),
-		7=>array(0=>"nume_asientos",1=>"N� asientos del cine",2=>2, 3=>2, 4=>10));
+				7=>array(0=>"nume_asientos",1=>"N� asientos del cine",2=>2, 3=>2, 4=>10));
     	   
     	   if ($id_to_edit>0) {
     	 	$sql_script = "SELECT nombre_cine, nombre_peli, descripcion, sesion1, sesion2, sesion3, 
     	    			   nume_filas, nume_asientos 
 						   FROM cine where id='$id_to_edit'";
     	 			
-    	 	$this->ejecuta_SQL($sql_script);
-    		//	or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");
-    					
-    		$filas = mysql_num_rows($this->datos);
+    	 	$resultado=$this->ejecuta_SQL($sql_script);
+    		//	or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");		
+    		$filas = $resultado->rowCount();
     		if ($filas==0) { //resultado query vac�o
     	  	echo "<CENTER>
     	  		<TABLE BORDER=1 WIDTH=600 bordercolorlight='#FFFFFF' 
@@ -150,15 +149,13 @@ class cine {
 	// Buscar pelicula
     function buscar($lo_q_busco) {
         	
- 	   $sql_script="SELECT Id, nombre_cine, nombre_peli, descripcion  FROM cine 
-   			     WHERE nombre_peli like '%".$lo_q_busco."%' 
-   			     ORDER BY nombre_cine";
+ 	   	$sql_script="SELECT Id, nombre_cine, nombre_peli, descripcion  FROM cine 
+			WHERE nombre_peli like '%".$lo_q_busco."%' ORDER BY nombre_cine";
    	
-   	   	$this->ejecuta_SQL($sql_script);
+		$resultado=$this->ejecuta_SQL($sql_script);
    		//or die ("<CENTER><H2>Error al consultar la base de datos: ".$sql_script.".</H2></CENTER>");
-   		
-   	   $filas = mysql_num_rows($this->datos);
-   	   if ($filas==0) { //resultado query vac�o
+   	   	$filas = $resultado->rowCount();
+   	   	if ($filas==0) { //resultado query vac�o
    		echo "<CENTER>
    			<TABLE BORDER=1 WIDTH=650 bordercolorlight='#FFFFFF' bordercolor='#FFFFFF' bgcolor='#C0C0C0'>
    			<TR><TD ALIGN=CENTER VALIGN=CENTER><H2>No se encuentra ning�n registro</H2>
@@ -194,15 +191,17 @@ class cine {
 	function comprar($Id, $sesion, $dia) {
 		if (ereg ("([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})", $dia, $regs)) 
 			$fecha=$regs[3]."-".$regs[2]."-".$regs[1];
-		else {$dia=date("j/n/Y"); $fecha=date("Y-m-d");} 
-		$sql_script = "SELECT nombre_cine, nombre_peli, nume_filas, nume_asientos, sesion1, sesion2, sesion3 
-			       FROM cine where Id='$Id'";
-    	 			
-    		$this->ejecuta_SQL($sql_script);
-    		//	or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");
-    					
-    		$filas = mysql_num_rows($this->datos);
-    		if ($filas==0) { //resultado query vac�o
+		else {
+			$dia=date("j/n/Y"); 
+			$fecha=date("Y-m-d");
+		} 
+		$sql_script = "SELECT nombre_cine, nombre_peli, nume_filas, 
+			nume_asientos, sesion1, sesion2, sesion3 FROM cine where Id='$Id'";
+    	
+		$reultado=$this->ejecuta_SQL($sql_script);
+    	//	or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");			
+		$filas = $resultado->rowCount();
+    	if ($filas==0) { //resultado query vac�o
     		echo "<CENTER>
     	  		<TABLE BORDER=1 WIDTH=600 bordercolorlight='#FFFFFF' 
     	  				bordercolor='#FFFFFF' bgcolor='#C0C0C0'>
@@ -242,12 +241,11 @@ class cine {
 			for($i=1; $i<=$myrow[2]; $i++) {
 				echo "<TR>";
 				for($j=1; $j<=$myrow[3]; $j++) {
-					$sql_script = "SELECT Id FROM cine_entradas 
-						       WHERE Id_cine='$Id' and sesion='$sesion' and fila=$i and asiento=$j and dia='$fecha'";
+					$sql_script = "SELECT Id FROM cine_entradas WHERE Id_cine='$Id' and sesion='$sesion' and fila=$i and asiento=$j and dia='$fecha'";
     	 			
-					$this->ejecuta_SQL($sql_script);
-					//		or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");
-					$filas = mysql_num_rows($this->datos);
+					$resultado=$this->ejecuta_SQL($sql_script);
+					// or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");
+					$filas = $resultado->rowCount();
 					if ($filas==0) {echo "<TD bgcolor=lime>"; $accion=1;}
 					else { echo "<TD bgcolor=red>"; $accion=0;}
 					echo "<A href=index.php?operacion=exec_comprar&Id=$Id&sesion=$sesion&fila=$i&asiento=$j&accion=$accion&dia=$dia#ancla>
