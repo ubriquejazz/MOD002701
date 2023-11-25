@@ -52,7 +52,7 @@
     <?php
 
     require ("cine.php");	
-    $los_cine=new cine();
+    $los_cine=new cine("ejercicios");
 	
     // form1
     echo "<TABLE border='0' width='600'><TR>

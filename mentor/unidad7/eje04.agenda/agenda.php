@@ -119,7 +119,7 @@ class agenda {
 					<TR><TD ALIGN=CENTER VALIGN=CENTER><H2>No se encuentra ningún registro</H2></TD></TR></TABLE>";
 			}
 			else {
-				$myrow = $resultado->fetchAll();;
+				$myrow = $resultado->fetchAll();
 				for ($i=0; $i < count($campos); $i++)
 					$campos[$i][4]=$myrow[0][$i];
 			}
