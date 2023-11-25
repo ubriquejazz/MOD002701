@@ -64,23 +64,23 @@ class cine {
 			  $sql_script = "INSERT INTO cine (nombre_peli, nombre_cine, descripcion, sesion1, sesion2, sesion3, nume_filas, nume_asientos)
     	  		             VALUES('$nombre_peli', '$nombre_cine', '$descripcion', '$sesion1', '$sesion2', '$sesion3', $nume_filas, $nume_asientos)";
 		  }
-    	  $this->datos = mysql_query($sql_script,$this->id_conexion);
+    	  $this->ejecuta_SQL($sql_script);
     	  $this->buscar("");
-	}//end add_cine
+	}
     
 	// N� total de pel�culas
 	function nume_cines () {
     		$sql_script = "SELECT * FROM cine";
-    		$this->datos = mysql_query($sql_script,$this->id_conexion);
+    		$this->ejecuta_SQL($sql_script);
     		return mysql_num_rows($this->datos);
 	}
     	
 	// Borrar cine
 	function del_cine($id_to_del) {
     		$sql_script = "delete FROM cine where Id=$id_to_del";
-    		$this->datos = mysql_query($sql_script,$this->id_conexion);
+    		$this->ejecuta_SQL($sql_script);
 			$sql_script = "delete FROM cine_entradas where Id_cine=$id_to_del";
-    		$this->datos = mysql_query($sql_script,$this->id_conexion);    			
+    		$this->ejecuta_SQL($sql_script);    			
     		$this->buscar("");
     }
     
@@ -102,8 +102,8 @@ class cine {
     	    			   nume_filas, nume_asientos 
 						   FROM cine where id='$id_to_edit'";
     	 			
-    	 	$this->datos = @mysql_query($sql_script,$this->id_conexion)
-    			or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");
+    	 	$this->ejecuta_SQL($sql_script);
+    		//	or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");
     					
     		$filas = mysql_num_rows($this->datos);
     		if ($filas==0) { //resultado query vac�o
@@ -154,8 +154,8 @@ class cine {
    			     WHERE nombre_peli like '%".$lo_q_busco."%' 
    			     ORDER BY nombre_cine";
    	
-   	   $this->datos = @mysql_query($sql_script,$this->id_conexion)
-   		or die ("<CENTER><H2>Error al consultar la base de datos: ".$sql_script.".</H2></CENTER>");
+   	   	$this->ejecuta_SQL($sql_script);
+   		//or die ("<CENTER><H2>Error al consultar la base de datos: ".$sql_script.".</H2></CENTER>");
    		
    	   $filas = mysql_num_rows($this->datos);
    	   if ($filas==0) { //resultado query vac�o
@@ -198,8 +198,8 @@ class cine {
 		$sql_script = "SELECT nombre_cine, nombre_peli, nume_filas, nume_asientos, sesion1, sesion2, sesion3 
 			       FROM cine where Id='$Id'";
     	 			
-    		$this->datos = @mysql_query($sql_script,$this->id_conexion)
-    			or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");
+    		$this->ejecuta_SQL($sql_script);
+    		//	or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");
     					
     		$filas = mysql_num_rows($this->datos);
     		if ($filas==0) { //resultado query vac�o
@@ -245,8 +245,8 @@ class cine {
 					$sql_script = "SELECT Id FROM cine_entradas 
 						       WHERE Id_cine='$Id' and sesion='$sesion' and fila=$i and asiento=$j and dia='$fecha'";
     	 			
-					$this->datos = @mysql_query($sql_script,$this->id_conexion)
-							or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");
+					$this->ejecuta_SQL($sql_script);
+					//		or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");
 					$filas = mysql_num_rows($this->datos);
 					if ($filas==0) {echo "<TD bgcolor=lime>"; $accion=1;}
 					else { echo "<TD bgcolor=red>"; $accion=0;}
@@ -269,8 +269,8 @@ class cine {
     	  			       VALUES('$Id', '$sesion', '$fila', '$asiento', '$fecha')";
 		else $sql_script = "DELETE from cine_entradas 
 							WHERE Id_cine='$Id' and sesion='$sesion' and fila=$fila and asiento=$asiento and dia='$fecha'";
-		$this->datos = @mysql_query($sql_script,$this->id_conexion)
-    			or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");
+		$this->ejecuta_SQL($sql_script);
+    	//		or die ("<CENTER><H2>Error al consultar la base de datos</H2></CENTER>");
 		$this->comprar($Id, $sesion, $dia);		
 	} //end funci�n exec_comprar
 	
