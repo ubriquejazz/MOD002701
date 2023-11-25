@@ -11,8 +11,6 @@ define("CLAVE", "");
 	
 class cine {
   	
-  	private $datos;
-  	private $id_conexion;
   	protected $db;
   	
   	function __construct($BD="") {
@@ -28,7 +26,7 @@ class cine {
 			// Si no indicamos la BD es que hay que crearla de nuevo
 			if ($BD=='') {
 				// Ejecutamos la SQL de Creación de BD directamente en el servidor MySQL.
-			   $sql = file_get_contents('ejercicios.sql');			 
+			   $sql = file_get_contents('bbdd.sql');			 
 			   $this->ejecuta_SQL($sql);
 			}
 		} catch (PDOException $e) {
@@ -115,7 +113,7 @@ class cine {
     		}
     		else //la b�squeda no es vac�a
     		{
-    			$myrow = mysql_fetch_row($this->datos);
+    			$myrow = $resultado->fetchAll();
     			for ($i=0; $i < count($campos); $i++)
     				$campos[$i][4]=substr($myrow[$i], 0, $campos[$i][3]);
     		}
@@ -169,16 +167,17 @@ class cine {
 			  <TH bgcolor='green' width=450><FONT color='white'>Descripci&oacute;n</FONT></TH>			  
 			  <TH bgcolor='green' colspan='4'><FONT color='white'>Operaciones</FONT></TH>
 			</TR>";
-		while ( $myrow = mysql_fetch_row($this->datos))
+		
+		foreach ($resultado as $valor) {
 		{
 		   echo "<TR>
-		   	   <TD><FONT size='-1'><B>".$myrow[1]."</B></FONT></TD>
-		   	   <TD><FONT size='-1'><B>".$myrow[2]."</B></FONT></TD>
-		   	   <TD><FONT size='-1'><B>".$myrow[3]."</B></FONT></TD> 
-		   	   <TD>".boton_ficticio("Consulta","index.php?operacion=introduce&ver=1&nume=".$myrow[0]."#ancla")."</TD>
-		   	   <TD>".boton_ficticio("Editar","index.php?operacion=introduce&ver=0&nume=".$myrow[0]."#ancla")."</TD>
-		   	   <TD>".boton_ficticio("Comprar","index.php?operacion=comprar&sesion=1&nume=".$myrow[0]."&dia=0#ancla")."</TD>		   	   
-		   	   <TD>".boton_ficticio("Borrar","index.php?operacion=borrar&nume=".$myrow[0])."</TD>
+		   	   <TD><FONT size='-1'><B>".$valor[1]."</B></FONT></TD>
+		   	   <TD><FONT size='-1'><B>".$valor[2]."</B></FONT></TD>
+		   	   <TD><FONT size='-1'><B>".$valor[3]."</B></FONT></TD> 
+		   	   <TD>".boton_ficticio("Consulta","index.php?operacion=introduce&ver=1&nume=".$valor[0]."#ancla")."</TD>
+		   	   <TD>".boton_ficticio("Editar","index.php?operacion=introduce&ver=0&nume=".$valor[0]."#ancla")."</TD>
+		   	   <TD>".boton_ficticio("Comprar","index.php?operacion=comprar&sesion=1&nume=".$valor[0]."&dia=0#ancla")."</TD>		   	   
+		   	   <TD>".boton_ficticio("Borrar","index.php?operacion=borrar&nume=".$valor[0])."</TD>
 		   	 </TR>";
 		}
 		echo "</TABLE><P>
@@ -210,7 +209,7 @@ class cine {
     	  		</TD></TR></TABLE></CENTER>";
     		} 
 		else { //Se puede dibujar las butacas del cine.
-			$myrow = mysql_fetch_row($this->datos);
+			$myrow = $resultado->fetchAll();
 			echo "<A name=ancla><HR>
 			      <TABLE BORDER='0' cellspacing='5' cellpadding='0' align='center' width='600'>
     			  	  <TR>
