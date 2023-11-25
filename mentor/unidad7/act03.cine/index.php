@@ -73,40 +73,57 @@
         <INPUT TYPE='SUBMIT' NAME='alta' VALUE='Listado completo'></FORM>
 	    </TD></TR></TABLE>";
 
+    if (isset($operacion)){
 
-        if (isset($operacion)){
-            if ($operacion=="listado") $los_cine->buscar("");
-            else
-            if ($operacion=="buscar") $los_cine->buscar($lo_q_busco);
-            else
-            if ($operacion=="introduce") {//ventana de alta o edici�n
+        switch($operacion) {
+
+            case "buscar": 
+                $los_cine->buscar($lo_q_busco);
+                break;
+
+            case "introduce": //ventana de alta o edici�n
                 if ($ver==1) $caption="Datos del cine";
                 else if ($nume>0) $caption="Modificar cine";
                 else $caption="Alta de nuevo cine";
                 echo "<A NAME='ancla'></A><FONT color='green'>$caption</FONT>";
                 $los_cine->introduce($nume, $ver);
-            } else
-            if ($operacion=="exec_alta") { //Alta cine/pel�cula
-               if ($nombre_cine=="") 
-                echo "<CENTER>No se puede realizar la operaci�n: el campo 'Nombre del cine' es obligatorio.</CENTER><P>";
-              else
-              if ($nombre_peli=="") 
-                    echo "<CENTER>No se puede realizar la operaci�n: el campo 'Nombre de la pel�cula' es obligatorio.</CENTER><P>";
-              else if ($nume_filas*$nume_asientos>1000) echo "<CENTER>No se puede realizar la operaci�n: el cine es demasiado grande.</CENTER><P>";
-              else {
-                    $los_cine->add_cine($registro, $nombre_peli, $nombre_cine, $descripcion, $sesion1, $sesion2, $sesion3, $nume_filas, $nume_asientos);
-                    if ($registro>0) $caption="modificado";
-                    else $caption="dado de alta";
-                    echo "<P><CENTER><FONT color='green'> Se ha $caption correctamente el cine: 
-                      <B>$nombre_cine</B></FONT></CENTER><P>";
-              }
-          } else
-          if ($operacion=="borrar") $los_cine->del_cine($nume);
-          else if ($operacion=="comprar") $los_cine->comprar($nume, $sesion, $dia);
-          else if ($operacion=="exec_comprar") $los_cine->exec_comprar($Id, $sesion, $fila, $asiento, $accion, $dia);
-        } else //end if isset($operacion)
-        $los_cine->buscar("");
-          
+                break;
+
+            case "exec_alta": //Alta cine/pel�cula
+                if ($nombre_cine=="") 
+                    echo "No se puede realizar la operacion: el campo 'Nombre del cine' es obligatorio.<P>";
+                else if ($nombre_peli=="") 
+                    echo "El campo 'Nombre de la pelcula' es obligatorio.<P>";
+                else if ($nume_filas*$nume_asientos>1000) 
+                    echo "El cine es demasiado grande.<P>";
+                else {
+                     $los_cine->add_cine($registro, $nombre_peli, $nombre_cine, $descripcion, 
+                        $sesion1, $sesion2, $sesion3, $nume_filas, $nume_asientos);
+                     if ($registro>0) 
+                        $caption="modificado";
+                     else 
+                        $caption="dado de alta";
+                     echo "<P><FONT color='green'> Se ha $caption correctamente el cine: <B>$nombre_cine</B></FONT><P>";
+               }
+               break;
+
+            case "borrar": 
+                $los_cine->del_cine($nume);
+                break;
+
+            case "comprar": 
+                $los_cine->comprar($nume, $sesion, $dia);
+                break;
+
+            case "exec_comprar":
+                $los_cine->exec_comprar($Id, $sesion, $fila, $asiento, $accion, $dia);
+                break;
+
+            dafault:
+                $los_cine->buscar("");
+                break;
+        }
+    } 
     ?>
 </body>
 </html>

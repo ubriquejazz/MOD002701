@@ -23,15 +23,14 @@ class cine {
   	  
   	  /* Intentamos establecer una conexi�n persistente con el servidor.*/
   	  $this->id_conexion = @mysql_pconnect($DBHost, $DBUser, $DBPass) or
-  	  		die("<CENTER><H3>No se ha podido establecer la conexi�n.
-  	  			<P>Compruebe si est� activado el servidor de bases de datos MySQL.</H3></CENTER>");
+  	  		die("<H3>No se ha podido establecer la conexion.
+  	  			<P>Compruebe si esta activado el servidor de bases de datos MySQL.</H3>");
   	  			
   	  /* Intentamos seleccionar la base de datos "ejercicios". Si no
   	  	se consigue, se informa de ello y se indica cu�l es el
   	  	motivo del fallo con el n�mero y el mensaje de error.*/
   	  if (!mysql_select_db($DB))
-  	  	printf("<CENTER><H3>No se ha podido seleccionar la base de datos
-  	  		\"$DB\": <P>%s",'Error n� '.mysql_errno().'.-'.mysql_error());
+  	  	printf("<H3>No se ha podido seleccionar la base de datos\"$DB\": <P>%s",'Error no '.mysql_errno().'.-'.mysql_error());
 	}
 	
 	function __destruct () {
