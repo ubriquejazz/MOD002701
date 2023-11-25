@@ -1,29 +1,25 @@
 <?php
 
-  function boton_ficticio($caption,$url)
-  {
-      return "<TABLE border=1 CELLSPACING=0 CELLPADDING=3 bgcolor=black>
-              <TR><TD bgcolor='white'><FONT size ='-1'><a href = '$url'>$caption</A></FONT></TD></TR></TABLE>";
-  }
+function boton_ficticio($caption,$url){
+	return "<TABLE border=1 CELLSPACING=0 CELLPADDING=3 bgcolor=black>
+			<TR><TD bgcolor='white'><FONT size ='-1'><a href = '$url'>$caption</A></FONT></TD></TR></TABLE>";
+}
+
+define("SERVIDOR", "localhost");
+define("USUARIO", "root");
+define("CLAVE", "");
 	
-  class cine {
+class cine {
   	
   	private $datos;
   	private $id_conexion;
   	
-  	function cine () //Esto es el constructor
-  	{
+  	function __construct () {
   	 	  
-	  /*$DBHost="localhost";
+	  $DBHost="localhost";
 	  $DBUser="root";
 	  $DBPass="";
-	  $DB="ejercicios";*/
-	  
-	  $DBHost='10.10.110.11';
-	  $DBUser='usuarioMCPHP';
-	  $DBPass='CpHP1()2';
-	  $DB='mentorCursoPHP';
-
+	  $DB="ejercicios";
   	  
   	  /* Intentamos establecer una conexi�n persistente con el servidor.*/
   	  $this->id_conexion = @mysql_pconnect($DBHost, $DBUser, $DBPass) or
@@ -36,10 +32,9 @@
   	  if (!mysql_select_db($DB))
   	  	printf("<CENTER><H3>No se ha podido seleccionar la base de datos
   	  		\"$DB\": <P>%s",'Error n� '.mysql_errno().'.-'.mysql_error());
-	}//end function cine
+	}
 	
-	function _cine () //Esto es el destructor
-	{
+	function __destruct () {
 	  /* Liberamos la conexi�n persistente con el servidor.*/
 	  if (isset($this->datos)) mysql_free_result($this->datos);
 	  if (isset($this->id_conexion)) mysql_close($this->id_conexion);
@@ -59,26 +54,26 @@
 		  }
     	  $this->datos = mysql_query($sql_script,$this->id_conexion);
     	  $this->buscar("");
-        }//end add_cine
+	}//end add_cine
     
-    	// N� total de pel�culas
-    	function nume_cines () {
+	// N� total de pel�culas
+	function nume_cines () {
     		$sql_script = "SELECT * FROM cine";
     		$this->datos = mysql_query($sql_script,$this->id_conexion);
     		return mysql_num_rows($this->datos);
-    	}
+	}
     	
-    	// Borrar cine
-    	function del_cine($id_to_del) {
+	// Borrar cine
+	function del_cine($id_to_del) {
     		$sql_script = "delete FROM cine where Id=$id_to_del";
     		$this->datos = mysql_query($sql_script,$this->id_conexion);
 			$sql_script = "delete FROM cine_entradas where Id_cine=$id_to_del";
     		$this->datos = mysql_query($sql_script,$this->id_conexion);    			
     		$this->buscar("");
-    	}
+    }
     
-    	// A�adir o modificar cine
-    	function introduce($id_to_edit, $ver) {
+    // A�adir o modificar cine
+	function introduce($id_to_edit, $ver) {
     		
 	   $campos=array(	
     	    	0=>array(0=>"nombre_cine",1=>"Nombre del cine",2=>50, 3=>100, 4=>""),
@@ -138,10 +133,10 @@
     	   echo "</CENTER>";
     	   if ($ver==0) echo "</FORM>";	
     	
-    	}//end A�adir o modificar cine
+    }//end A�adir o modificar cine
    
-    	// Buscar pelicula
-    	function buscar($lo_q_busco) {
+	// Buscar pelicula
+    function buscar($lo_q_busco) {
         	
  	   $sql_script="SELECT Id, nombre_cine, nombre_peli, descripcion  FROM cine 
    			     WHERE nombre_peli like '%".$lo_q_busco."%' 
