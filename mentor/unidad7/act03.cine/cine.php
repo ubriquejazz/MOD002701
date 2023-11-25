@@ -13,31 +13,44 @@ class cine {
   	
   	private $datos;
   	private $id_conexion;
+  	protected $db;
   	
-  	function __construct () {
-  	 	  
-	  $DBHost="localhost";
-	  $DBUser="root";
-	  $DBPass="";
-	  $DB="ejercicios";
-  	  
-  	  /* Intentamos establecer una conexi�n persistente con el servidor.*/
-  	  $this->id_conexion = @mysql_pconnect($DBHost, $DBUser, $DBPass) or
-  	  		die("<H3>No se ha podido establecer la conexion.
-  	  			<P>Compruebe si esta activado el servidor de bases de datos MySQL.</H3>");
-  	  			
-  	  /* Intentamos seleccionar la base de datos "ejercicios". Si no
-  	  	se consigue, se informa de ello y se indica cu�l es el
-  	  	motivo del fallo con el n�mero y el mensaje de error.*/
-  	  if (!mysql_select_db($DB))
-  	  	printf("<H3>No se ha podido seleccionar la base de datos\"$DB\": <P>%s",'Error no '.mysql_errno().'.-'.mysql_error());
+  	function __construct($BD="") {
+		try {
+			if ($BD!='')
+				$this->db = new PDO("mysql:host=" . SERVIDOR . ";dbname=" . $BD .";charset=utf8", USUARIO, CLAVE, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+			else 
+				$this->db = new PDO("mysql:host=" . SERVIDOR. ";charset=utf8", USUARIO, CLAVE, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+			
+			$this->db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,  true);
+			// Indicamos como atributo que se debe devolver una cadena vacía para los valores nulos
+			$this->db->setAttribute(PDO::NULL_TO_STRING, true);
+			// Si no indicamos la BD es que hay que crearla de nuevo
+			if ($BD=='') {
+				// Ejecutamos la SQL de Creación de BD directamente en el servidor MySQL.
+			   $sql = file_get_contents('ejercicios.sql');			 
+			   $this->ejecuta_SQL($sql);
+			}
+		} catch (PDOException $e) {
+			die ("<p><H3>No se ha podido establecer la conexión.
+			<P>Compruebe si está activado el servidor de bases de datos MySQL.</H3></p>\n <p>Error: " . $e->getMessage() . "</p>\n");
+		} 
 	}
 	
-	function __destruct () {
-	  /* Liberamos la conexi�n persistente con el servidor.*/
-	  if (isset($this->datos)) mysql_free_result($this->datos);
-	  if (isset($this->id_conexion)) mysql_close($this->id_conexion);
-	}//end destructor cine
+	function __destruct() {
+		if (isset($db)) // Desconectamos de la BD
+			$db=null;
+	}
+
+	function ejecuta_SQL($sql) {
+		$resultado=$this->db->query($sql);
+		if (!$resultado){
+			echo"<H3>No se ha podido ejecutar la consulta: <PRE>$sql</PRE><P><U> Errores</U>: </H3><PRE>";
+			print_r($this->db->errorInfo());					
+			die ("</PRE>");
+		}
+		return $resultado;
+	} 
 	
 	// A�adir un cine a la lista
 	function add_cine($registro, $nombre_peli, $nombre_cine, $descripcion, $sesion1, $sesion2, $sesion3, $nume_filas, $nume_asientos)
