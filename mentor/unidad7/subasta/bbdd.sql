@@ -13,7 +13,7 @@ CREATE TABLE subasta_articulos (
 
 
 INSERT INTO subasta_articulos VALUES("1","Libros","Encicloperias varias de Historia del Arte","2004-09-29","250.88","0");
-INSERT INTO subasta_articulos VALUES("2","Discos","Colección de 3100 discos de vinilo","2004-09-29","345.99","0");
+INSERT INTO subasta_articulos VALUES("2","Discos","Coleccion de 3100 discos de vinilo","2004-09-29","345.99","0");
 INSERT INTO subasta_articulos VALUES("3","Comics","1200 comics variados","2004-09-29","456.88","0");
 INSERT INTO subasta_articulos VALUES("4","Deportes","250 camisetas deportivas","2004-09-29","1400.25","1");
 

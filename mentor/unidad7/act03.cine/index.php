@@ -74,17 +74,21 @@
 	    </TD></TR></TABLE>";
 
     if (isset($operacion)){
-
+        
         switch($operacion) {
 
+            case "listado":
             case "buscar": 
                 $los_cine->buscar($lo_q_busco);
                 break;
 
             case "introduce": //ventana de alta o edici�n
-                if ($ver==1) $caption="Datos del cine";
-                else if ($nume>0) $caption="Modificar cine";
-                else $caption="Alta de nuevo cine";
+                if ($ver==1) 
+                    $caption="Datos del cine";
+                else if ($nume>0) 
+                    $caption="Modificar cine";
+                else 
+                    $caption="Alta de nuevo cine";
                 echo "<A NAME='ancla'></A><FONT color='green'>$caption</FONT>";
                 $los_cine->introduce($nume, $ver);
                 break;
