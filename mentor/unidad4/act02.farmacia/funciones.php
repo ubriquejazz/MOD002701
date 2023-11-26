@@ -18,7 +18,21 @@
             <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\"><a href='index.php?operacion2=por_cantidad'>Cantidad </a></FONT></th>
             <th bgcolor=\"teal\"><FONT color=\"white\" face=\"arial, helvetica\"><a href='index.php?operacion2=por_importe'>Importe(€) </a></FONT></th>
             <th bgcolor=\"teal\" colspan=\"2\"><FONT color=\"white\" face=\"arial, helvetica\">Operaciones</FONT></th>
+            <th bgcolor=\"teal\" colspan=\"2\"><FONT color=\"white\" face=\"arial, helvetica\">Carrito</FONT></th>
         </TR>";
+    }
+
+    function tabla_header2($aplicacion) {
+        if ($aplicacion === 'carrito') {
+            echo'<P>El contenido de la cesta de la compra es:<br>';
+            echo "<TABLE BORDER=\"0\" cellspacing=\"1\" cellpadding=\"1\" align=\"center\" width=\"600\">
+                <TR>
+                    <th bgcolor=\"yellow\"><FONT color=\"black\" face=\"arial, helvetica\">
+                    Artículo</FONT></th>
+                    <th bgcolor=\"yellow\"><FONT color=\"black\" face=\"arial, helvetica\">
+                    Cantidad</FONT></th>
+                </TR>";	
+        }
     }
 
     function tabla_body($matriz, $id_edit) {
@@ -32,6 +46,7 @@
                         <TD>".$matriz[$i][3]."</TD>";
                 echo "<TD>".boton_ficticio("Editar","index.php?operacion=editar&nume=".$id_current)."</TD>";
                 echo "<TD>".boton_ficticio("Borrar","index.php?operacion=borrar&nume=".$id_current)."</TD>";
+                echo "<TD>".boton_ficticio("Agregar","index.php?operacion=agregar&nume=".$id_current);
                 echo "</TD></TR>";	
             }
             else {

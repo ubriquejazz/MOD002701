@@ -19,6 +19,8 @@
 
     require "farmacia.php";
     require "funciones.php";
+    session_start();
+
     $apoteke = new farmacia(getcwd());
     $matriz = $apoteke->leer_todos();
 
@@ -72,6 +74,28 @@
             tabla_body($matriz, -1);
             break;
 
+        case "agregar":
+            $encontrado=0;
+		
+            // Si la variable de sesión productosEnCesta no existe, la creamos
+            if (!isset($_SESSION["productosEnCesta"])){
+                $_SESSION["productosEnCesta"][$_REQUEST["nume"]]=1;
+            } 
+            else {	
+                foreach($_SESSION["productosEnCesta"] as $k => $v){
+                    if ($_POST["producto"]==$k){
+                        $_SESSION["productosEnCesta"][$k]++;
+                        $encontrado=1;
+                    }
+                }
+    
+                // Si el producto no está ya en la lista, lo añadimos a la variable de sesión productosEnCesta
+                if (!$encontrado) 
+                    $_SESSION["productosEnCesta"][$_REQUEST["nume"]]=1;
+    
+            } // end else 
+            break;
+
         default: // listado ordenado o no
             switch ($ordenar_por) {
                 case "por_nombre":
@@ -109,13 +133,14 @@
     <TABLE BORDER="0" cellspacing="1" cellpadding="1" align="center" width="600">
 		<TR>
 			<TD><FONT size ="-1" face="arial, helvetica">
-				El nº de medicamentos es: <?php echo $apoteke->numero_medicamentos;?><P>
-                El mas caro es: <?php echo $apoteke->el_mas_caro;?></LEFT></FONT></TD>
+				El nº de medicamentos es: <?php echo $apoteke->numero_medicamentos;?></LEFT></FONT></TD>
 			<TD valign=top align=right>		
 			<?php echo boton_ficticio("Ver listado inicial","index.php?operacion=listado"); ?></TD>
+            <TD valign=top align=right>	
+            <?php echo boton_ficticio("Ir a mi carrito","carrito.php"); ?></TD>
 		</TR>
 	</TABLE>
-
+    <br>
     NOTA: no se puede repetir el nombre de un medicamento en esta farmacia.
     </center>
 </body>
