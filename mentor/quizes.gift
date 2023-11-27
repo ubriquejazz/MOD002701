@@ -1,3 +1,85 @@
+$CATEGORY: Modulo 03
+
+::Q301::
+Indica la frase incorrecta sobre las bases de datos. {
+=La información de una base de datos puede almacenarse en un solo fichero o en varios.
+~En las bases de datos la información está almacenada y organizada en ficheros en forma de filas y columnas.
+~La seguridad de los datos informatizados en bases de datos es menor que la contenida en archivos de tipo manual.
+~Las filas de un archivo de base de datos se denominan campos y las columnas, índices.
+}
+
+::Q302:: 
+La función gzseek se usa para lo siguiente {
+~Conocer el número de byte sobre el que está situado el puntero de un archivo de tipo gzip.
+=Buscar una posición en un fichero de tipo gzip y colocar el puntero sobre la misma.
+~Escribir una cadena en un fichero de tipo gzip en modo binario.
+~Abrir un fichero gzip en el que se va a escribir de forma comprimida.
+}
+
+::Q303::
+La función error_reporting se usa para lo siguiente {
+~Remitir un mensaje de error al dispositivo que se indique.
+=Establece el nivel de registro de los errores PHP.
+~Detectar y corregir la falta de punto y coma al final de una sentencia.
+~Detectar y corregir físicamente los errores en el código PHP.
+}
+
+::Q304::  
+La expresión echo min(74, 55); devuelve lo siguiente {
+=55.
+~74.
+~-74.
+~-55.
+}
+
+::Q305:: 
+Indica la frase correcta sobre el método rowCount(). {
+~Devuelve el número de campos que se han visto afectadas al ejecutarse una sentencia delete table.
+=Ejecuta una consulta y devuelve el número de filas (registros) que se han visto afectadas.
+~Devuelve solamente la información de una consulta al navegador del cliente.
+~Devuelve el número de filas (registros) que se han visto afectadas al ejecutarse una sentencia insert, update o delete.
+}
+
+::Q306::  
+Indica la frase correcta sobre la función query() de la clase PDO. {
+=Ejecuta una consulta y devuelve la información de la misma al navegador del cliente.
+~Libera de la memoria el resultado de una consulta.
+~Ejecuta una consulta, pero no devuelve por sí sola ninguna información al navegador del cliente.
+~Selecciona una tabla de la base de datos.
+}
+
+::Q307::  
+Para ordenar el resultado de una consulta por un determinado/s campo/s de la misma hay que usar la cláusula {
+=order by.
+~group by.
+~as.
+~having.
+}
+
+::Q308::  
+En la cláusula select el argumento group by debe utilizarse para {
+~Ordenar el resultado de una consulta por un determinado campo de la misma.
+~Seleccionar los campos de la consulta que se mostrarán en el resultado.
+~Eliminar de la consulta los registros duplicados.
+=Agrupar el resultado de una consulta por un determinado/s campo/s de la misma.
+}
+
+::Q309::  
+Para crear una tabla en una base de datos es preciso usar la sentencia siguiente {
+=create table.
+~use.
+~show databases.
+~insert into.
+}
+
+::Q3010:: 
+El método show() de la biblioteca PDFLib se usa para lo siguiente {
+~Abrir un nuevo documento de tipo PDF.
+~Asignar a un documento PDF diversas informaciones, como autoría, título, asunto, etc.
+~Permite escribir un texto en la posición actual del puntero de escritura.
+=Muestra el resultado del documento PDF generado.
+}
+
 $CATEGORY: Modulo 02
 
 ::Q201:: 
@@ -84,7 +166,6 @@ Para terminar un script cuando nos interese mostrando un mensaje de texto, hay q
     =die.
     ~usleep.
 }
-
 
 $CATEGORY: Modulo 01
 
