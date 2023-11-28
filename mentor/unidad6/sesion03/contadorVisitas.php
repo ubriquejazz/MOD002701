@@ -11,7 +11,7 @@
 
     $_SESSION["n"] = isset($_SESSION["n"]) ? $_SESSION["n"] + 1 : 1;
     ?>
-    <h1><?= $_SESSION["n"] ?></h1>
-
+    <h1>Contador es <?= $_SESSION["n"] ?></h1>
+    <a href="contadorVisitas.php"> Recargar </a>
 </body>
 </html>
