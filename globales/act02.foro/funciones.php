@@ -20,7 +20,23 @@
             &nbsp;<FONT size='6' color='orange' face='arial, helvetica'>FORO DE MENSAJES</FONT>&nbsp
          </TH></TR>
          </TABLE>";
-   } // end imprimir_cabecera
+   } 
+
+   function imprimir_footer() 
+   {
+      echo "<br><br><center><p>Copyright " . date('Y') . ". Aula Mentor cumple al 100% las directrices de protección de datos del GDPR.<br>";
+      echo "Lee nuestra Política de Privacidad para entender cómo recogemos, almacenamos y procesamos tu información privada según el GDPR.";
+      echo "</p><br>" . boton_ficticio("Logout", "index.php?logout") . "</center>";
+      echo "</BODY></HTML>";
+   }
+
+   function boton_ficticio($caption,$url)
+   {
+      return "<TABLE border=1 CELLSPACING=0 CELLPADDING=3 bgcolor=black>
+                           <TR><TD bgcolor='white'>
+                              <FONT size ='-1' face='arial, helvetica'><a href = '$url'>$caption</A></FONT>
+                           </TD></TR></TABLE>";
+   } // end funcion boton_fictio
 
    function conectar_BD() 
    {
@@ -38,12 +54,21 @@
       } 
    }
 
-   function boton_ficticio($caption,$url)
+   function ejecuta_SQL($sql) 
    {
-      return "<TABLE border=1 CELLSPACING=0 CELLPADDING=3 bgcolor=black>
-                           <TR><TD bgcolor='white'>
-                              <FONT size ='-1' face='arial, helvetica'><a href = '$url'>$caption</A></FONT>
-                           </TD></TR></TABLE>";
-   } // end funcion boton_fictio
+      global $id_conexion;
 
+		$resultado=$id_conexion->query($sql);
+		if (!$resultado){
+			echo"<H3>No se ha podido ejecutar la consulta: <PRE>$sql</PRE><P><U> Errores</U>: </H3><PRE>";
+			print_r($id_conexion->errorInfo());					
+			die ("</PRE>");
+		}
+		return $resultado;
+	} 
+
+   function insert_id() {
+      global $id_conexion;
+      return $id_conexion->lastInsertId();
+   }
 ?>
